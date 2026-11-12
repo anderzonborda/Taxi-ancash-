@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102b46">
+<title>TAXI ÁNCASH | Reservas</title>
+<style>
+:root{--navy:#102b46;--blue:#1769aa;--bg:#f3f6fa;--muted:#64748b;--line:#dce4ed}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:#172334}
+header{background:var(--navy);color:white;padding:25px 18px 30px}header .wrap,main{max-width:760px;margin:auto}
+.brand{font-size:13px;letter-spacing:2px;font-weight:800;color:#b9d9f3}
+h1{font-size:30px;margin:7px 0 4px}header p{margin:0;color:#d8e7f5}
+main{padding:18px 14px 40px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px #102b4608}
+h2{font-size:18px;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;font-weight:700;color:#41536a;margin-bottom:6px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:11px;background:white;font:inherit;color:#172334}
+.full{grid-column:1/-1}.muted{color:var(--muted);font-size:13px}
+.vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.vehicle{border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;background:white}
+.vehicle.active{border:2px solid var(--blue);background:#eef7ff;color:#0c5794}
+.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.seat{border:1px solid #b9c7d6;border-radius:10px;padding:12px 4px;text-align:center;font-weight:700;background:#fff;cursor:pointer}
+.seat.selected{background:#1769aa;color:white;border-color:#1769aa}
+.seat.taken{background:#e7ebf0;color:#9aa5b1;cursor:not-allowed;text-decoration:line-through}
+.check{display:flex;align-items:center;gap:10px;font-size:14px}.check input{width:18px;height:18px}
+button{width:100%;border:0;border-radius:12px;background:var(--blue);color:white;padding:14px;font-size:16px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.notice{background:#fff8e6;border:1px solid #f4d58b;color:#76530b;padding:11px;border-radius:11px;font-size:13px}
+.summary{line-height:1.8}.price{font-size:24px;font-weight:850;color:var(--navy)}
+footer{text-align:center;color:#8290a0;font-size:12px;padding:10px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.vehicles{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">SERVICIO DE TRANSPORTE</div><h1>TAXI ÁNCASH</h1><p>Reserva tu asiento de manera sencilla</p></div></header>
+<main>
+<section class="card">
+<h2>1. Datos del viaje</h2>
+<div class="grid">
+<div><label for="date">Fecha de salida</label><input id="date" type="date"></div>
+<div><label for="time">Hora de salida</label><select id="time"><option value="19:00">7:00 p. m.</option><option value="18:00">6:00 p. m.</option><option value="20:00">8:00 p. m.</option></select></div>
+<div class="full"><label>Elige tu vehículo</label><div class="vehicles" id="vehicles">
+<div class="vehicle active" data-v="1">Vehículo 1</div><div class="vehicle" data-v="2">Vehículo 2</div><div class="vehicle" data-v="3">Vehículo 3</div>
+</div></div>
+</div>
+</section>
+<section class="card">
+<h2>2. Elige tu asiento</h2>
+<p class="muted">Selecciona un asiento disponible. Esta versión es una demostración en este dispositivo.</p>
+<div class="seats" id="seats"></div>
+</section>
+<section class="card">
+<h2>3. Adicionales</h2>
+<label class="check"><input id="soda" type="checkbox"> Agregar 1 gaseosa (entrega durante el viaje)</label>
+<p class="muted">El precio de la gaseosa se confirmará cuando se establezca la tarifa.</p>
+</section>
+<section class="card">
+<h2>4. Resumen</h2>
+<div class="summary" id="summary">Selecciona fecha, vehículo y asiento para ver el resumen.</div>
+<div class="notice" style="margin:12px 0">La tarifa base y los datos de contacto para confirmar la reserva todavía deben configurarse.</div>
+<button id="reserve" disabled>Solicitar reserva</button>
+<p class="muted">La solicitud no se envía a una central ni bloquea asientos en otros teléfonos. Para reservas reales se necesita conectar una base de datos y un sistema de confirmación.</p>
+</section>
+<footer>TAXI ÁNCASH · Demo inicial</footer>
+</main>
+<script>
+const date=document.querySelector('#date'),time=document.querySelector('#time'),soda=document.querySelector('#soda');
+const today=new Date();date.min=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+let vehicle='1',seat=null;
+const seats=document.querySelector('#seats'),summary=document.querySelector('#summary'),reserve=document.querySelector('#reserve');
+function renderSeats(){seats.innerHTML='';for(let i=1;i<=4;i++){const b=document.createElement('button');b.type='button';b.className='seat'+(seat===i?' selected':'');b.textContent='Asiento '+i;b.onclick=()=>{seat=i;renderSeats();update()};seats.append(b)}}
+function update(){const d=date.value?new Date(date.value+'T12:00:00').toLocaleDateString('es-PE'):'Sin fecha';const dep=time.value;let surcharge='No calculado: falta configurar la tarifa y validar la hora actual.';if(date.value){const departure=new Date(date.value+'T'+dep+':00');const hours=(departure-new Date())/36e5;if(hours>=0&&hours<=6)surcharge='Corresponde recargo de última hora del 20 % sobre la tarifa base.';else if(hours>6)surcharge='Sin recargo de última hora.';else surcharge='La hora seleccionada ya pasó.'}
+summary.innerHTML='<b>Fecha:</b> '+d+'<br><b>Hora:</b> '+dep+'<br><b>Vehículo:</b> '+vehicle+'<br><b>Asiento:</b> '+(seat||'Sin elegir')+'<br><b>Gaseosa:</b> '+(soda.checked?'Sí':'No')+'<br><b>Tarifa:</b> Pendiente de configurar<br><b>Última hora:</b> '+surcharge;
+reserve.disabled=!(date.value&&seat)}
+document.querySelectorAll('.vehicle').forEach(el=>el.onclick=()=>{document.querySelectorAll('.vehicle').forEach(x=>x.classList.remove('active'));el.classList.add('active');vehicle=el.dataset.v;seat=null;renderSeats();update()});
+[date,time,soda].forEach(el=>el.addEventListener('change',update));
+reserve.onclick=()=>alert('Esta es una demo visual. Para recibir reservas reales debemos conectar el sistema de reservas y configurar tarifas y contacto.');
+renderSeats();update();
+</script>
+</body></html>
