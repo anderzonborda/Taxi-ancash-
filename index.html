@@ -177,7 +177,7 @@ footer{text-align:center;color:#8290a0;font-size:12.5px;padding:16px}
 
     <div class="card">
       <h2>2. Selecciona tu asiento</h2>
-      <p class="muted">Distribución de la camioneta (4 asientos para pasajeros)[span_0](start_span)[span_0](end_span).</p>
+      <p class="muted">Distribución de la camioneta (4 asientos para pasajeros)[span_1](start_span)[span_1](end_span).</p>
       <div class="cabin">
         <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:6px">Frente de la unidad</div>
         <div class="cabin-grid" id="seatsContainer"></div>
@@ -196,7 +196,7 @@ footer{text-align:center;color:#8290a0;font-size:12.5px;padding:16px}
           <input id="phone" inputmode="tel" maxlength="9" placeholder="987654321">
         </div>
         <div>
-          <label for="pay">Método de adelanto (20%)[span_1](start_span)[span_1](end_span)</label>
+          <label for="pay">Método de adelanto (20%)[span_2](start_span)[span_2](end_span)</label>
           <select id="pay">
             <option>Yape / Plin (943000111)</option>
             <option>Transferencia BCP</option>
@@ -223,7 +223,7 @@ footer{text-align:center;color:#8290a0;font-size:12.5px;padding:16px}
       <div class="summary-box" id="summary">Selecciona fecha, vehículo y asiento para ver el detalle.</div>
       
       <div class="notice">
-        Tarifa base del asiento: <b>S/ 60.00</b>[span_2](start_span)[span_2](end_span). Si reservas dentro de las últimas 6 horas, aplica recargo del 20% (S/ 72.00)[span_3](start_span)[span_3](end_span).
+        Tarifa base del asiento: <b>S/ 60.00</b>[span_3](start_span)[span_3](end_span). Si reservas dentro de las últimas 6 horas, aplica recargo del 20% (S/ 72.00)[span_4](start_span)[span_4](end_span).
       </div>
 
       <div class="btn-group">
@@ -283,7 +283,6 @@ window.addEventListener('load', () => {
   checkAdminRoute();
 });
 
-// CLAVE MAESTRA PRIVADA PARA EL USUARIO M1000 (#admin)
 const MASTER_ADMIN_KEY = 'AncashSecureKey_M1000_987$#';
 
 let vehiclesData = JSON.parse(localStorage.getItem('ta_vehicles') || 'null') || [
@@ -350,6 +349,12 @@ window.addEventListener('hashchange', () => {
 
 function renderVehicles() {
   let html = '';
+  // Si el vehículo seleccionado ya no está activo, seleccionar el primero disponible
+  const activeVehicles = vehiclesData.filter(v => v.active);
+  if (!vehiclesData.find(v => v.id === selectedVehicle)?.active && activeVehicles.length > 0) {
+    selectedVehicle = activeVehicles[0].id;
+  }
+
   vehiclesData.forEach(v => {
     const isSelected = selectedVehicle === v.id;
     const cssClass = !v.active ? 'vehicle disabled' : (isSelected ? 'vehicle active' : 'vehicle');
@@ -378,7 +383,6 @@ function selectVehicle(id, active) {
 
 function renderSeats() {
   const dateVal = $('date').value;
-  const vObj = vehiclesData.find(v => v.id === selectedVehicle);
   
   const takenSeats = bookings
     .filter(b => b.date === dateVal && b.vehicle === selectedVehicle && b.status !== 'Cancelada')
@@ -427,17 +431,17 @@ function calculateTotals() {
     const hours = (departure - new Date()) / 36e5;
     if (hours >= 0 && hours <= 6) {
       isLate = true;
-      surchargeText = 'Corresponde recargo de última hora del 20% sobre el pasaje (S/ 72.00)[span_4](start_span)[span_4](end_span).';
+      surchargeText = 'Corresponde recargo de última hora del 20% sobre el pasaje (S/ 72.00)[span_5](start_span)[span_5](end_span).';
     } else if (hours < 0) {
       surchargeText = 'La hora de salida de esta unidad ya pasó.';
     }
   }
 
-  const seatPrice = isLate ? 72 : 60;[span_5](start_span)[span_5](end_span)
+  const seatPrice = isLate ? 72 : 60;[span_6](start_span)[span_6](end_span)
   const packPrice = $('drinksPack').checked ? 40 : 0;
   const total = seatPrice + packPrice;
-  const deposit = total * 0.2;[span_6](start_span)[span_6](end_span)
-  const balance = total - deposit;[span_7](start_span)[span_7](end_span)
+  const deposit = total * 0.2;[span_7](start_span)[span_7](end_span)
+  const balance = total - deposit;[span_8](start_span)[span_8](end_span)
 
   return { isLate, surchargeText, seatPrice, packPrice, total, deposit, balance };
 }
@@ -457,7 +461,7 @@ function updateSummary() {
     <b>Pasaje:</b> S/ ${calc.seatPrice.toFixed(2)} ${calc.isLate ? '<span style="color:#d97706;font-weight:700">(Incluye +20%)</span>' : ''}<br>
     <b>Adicional:</b> ${$('drinksPack').checked ? 'Pack de 6 bebidas (+S/ 40.00)' : 'Ninguno'}<br>
     <b>Total a pagar:</b> S/ ${calc.total.toFixed(2)}<br>
-    <b>Adelanto requerido (20%):</b> S/ ${calc.deposit.toFixed(2)} | <b>Saldo al abordar:</b> S/ ${calc.balance.toFixed(2)}[span_8](start_span)[span_8](end_span)<br>
+    <b>Adelanto requerido (20%):</b> S/ ${calc.deposit.toFixed(2)} | <b>Saldo al abordar:</b> S/ ${calc.balance.toFixed(2)}[span_9](start_span)[span_9](end_span)<br>
     <b>Estado de tiempo:</b> ${calc.surchargeText}
   `;
 
@@ -472,7 +476,7 @@ function getWhatsAppUrl(b) {
   const cleanPhone = '943000111';
   const msg = [
     `*RESERVA - TAXI ÁNCASH*`,
-    `Ruta: San Marcos ↔ Antamina[span_9](start_span)[span_9](end_span)`,
+    `Ruta: San Marcos ↔ Antamina[span_10](start_span)[span_10](end_span)`,
     `--------------------------`,
     `*Pasajero:* ${b.passenger}`,
     `*Celular:* ${b.phone}`,
@@ -482,8 +486,8 @@ function getWhatsAppUrl(b) {
     `*Adicional:* ${b.drinks ? 'Pack 6 bebidas (S/ 40.00)' : 'Ninguno'}`,
     `--------------------------`,
     `*Total:* S/ ${b.total.toFixed(2)}`,
-    `*Adelanto (20%):* S/ ${b.deposit.toFixed(2)}[span_10](start_span)[span_10](end_span)`,
-    `*Saldo:* S/ ${b.balance.toFixed(2)}[span_11](start_span)[span_11](end_span)`,
+    `*Adelanto (20%):* S/ ${b.deposit.toFixed(2)}[span_11](start_span)[span_11](end_span)`,
+    `*Saldo:* S/ ${b.balance.toFixed(2)}[span_12](start_span)[span_12](end_span)`,
     `*Pago:* ${b.payMethod} (Op: ${b.operation})`,
     `_Adjunto comprobante para validación._`
   ].join('\n');
@@ -511,7 +515,7 @@ function executeReservation(openWp) {
     total: calc.total,
     deposit: calc.deposit,
     balance: calc.balance,
-    status: 'Pendiente de verificación[span_12](start_span)'[span_12](end_span)
+    status: 'Pendiente de verificación[span_13](start_span)'[span_13](end_span)
   };
 
   bookings.push(newBooking);
@@ -542,11 +546,11 @@ function renderMyBookings() {
     <div class="listitem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <b>${b.vehicleName} · Asiento #${b.seat}</b>
-        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_13](start_span)[span_13](end_span)</span>
+        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_14](start_span)[span_14](end_span)</span>
       </div>
       <div class="muted" style="margin-top:4px">
         Fecha: <b>${b.date}</b> (${b.time})<br>
-        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod} - Op: ${b.operation})[span_14](start_span)[span_14](end_span)
+        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod} - Op: ${b.operation})[span_15](start_span)[span_15](end_span)
       </div>
       ${b.status !== 'Cancelada' ? `
         <a href="${getWhatsAppUrl(b)}" target="_blank" class="action-btn whatsapp" style="margin-top:8px;padding:8px;font-size:13px">
@@ -585,8 +589,8 @@ function lockAdminSession() {
 
 function renderAdmin() {
   const activeBookings = bookings.filter(b => b.status !== 'Cancelada');
-  const confirmedCount = bookings.filter(b => b.status.includes('confirmado')).length;[span_15](start_span)[span_15](end_span)
-  const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);[span_16](start_span)[span_16](end_span)
+  const confirmedCount = bookings.filter(b => b.status.includes('confirmado')).length;[span_16](start_span)[span_16](end_span)
+  const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);[span_17](start_span)[span_17](end_span)
 
   $('adminKpis').innerHTML = `
     <div class="card" style="padding:12px;text-align:center;margin:0"><div style="font-size:18px;font-weight:800">${activeBookings.length}</div><div class="muted">Activas</div></div>
@@ -594,21 +598,22 @@ function renderAdmin() {
     <div class="card" style="padding:12px;text-align:center;margin:0"><div style="font-size:18px;font-weight:800;color:var(--blue)">S/ ${totalDeposits.toFixed(2)}</div><div class="muted">Adelantos</div></div>
   `;
 
+  // Renderizador con selectores y botones totalmente funcionales
   $('adminVehiclesManager').innerHTML = vehiclesData.map(v => `
-    <div class="listitem" style="display:flex;flex-direction:column;gap:8px">
+    <div class="listitem" style="display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <b>${v.name}</b> <span class="muted">(${v.plate})</span>
+        <div><b>${v.name}</b> <span class="muted">(${v.plate})</span></div>
         <button class="action-btn ${v.active ? 'whatsapp' : 'danger'}" style="width:auto;padding:8px 14px;font-size:12px" onclick="toggleVehicle('${v.id}')">
           ${v.active ? 'DISPONIBLE (Activo)' : 'NO DISPONIBLE'}
         </button>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
         <label style="font-size:12px;margin:0;white-space:nowrap">Hora de Salida:</label>
-        <select id="time_${v.id}" onchange="updateVehicleTime('${v.id}')" style="padding:6px 10px;font-size:12px">
-          <option ${v.time==='6:00 p. m.'?'selected':''}>6:00 p. m.</option>
-          <option ${v.time==='7:00 p. m.'?'selected':''}>7:00 p. m.</option>
-          <option ${v.time==='8:00 p. m.'?'selected':''}>8:00 p. m.</option>
-          <option ${v.time==='9:00 p. m.'?'selected':''}>9:00 p. m.</option>
+        <select id="time_input_${v.id}" onchange="updateVehicleTime('${v.id}')" style="padding:8px;font-size:12px">
+          <option value="6:00 p. m." ${v.time==='6:00 p. m.'?'selected':''}>6:00 p. m.</option>
+          <option value="7:00 p. m." ${v.time==='7:00 p. m.'?'selected':''}>7:00 p. m.</option>
+          <option value="8:00 p. m." ${v.time==='8:00 p. m.'?'selected':''}>8:00 p. m.</option>
+          <option value="9:00 p. m." ${v.time==='9:00 p. m.'?'selected':''}>9:00 p. m.</option>
         </select>
       </div>
     </div>
@@ -618,15 +623,15 @@ function renderAdmin() {
     <div class="listitem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <b>${b.passenger} (${b.phone})</b>
-        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_17](start_span)[span_17](end_span)</span>
+        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_18](start_span)[span_18](end_span)</span>
       </div>
       <div class="muted" style="margin:4px 0 8px">
         Fecha: ${b.date} (${b.time}) · <b>${b.vehicleName}</b> · Asiento #${b.seat}<br>
-        Pago: ${b.payMethod} (Ref: ${b.operation}) · Adelanto: S/ ${b.deposit.toFixed(2)} ${b.drinks ? '· +Pack Bebidas' : ''}[span_18](start_span)[span_18](end_span)
+        Pago: ${b.payMethod} (Ref: ${b.operation}) · Adelanto: S/ ${b.deposit.toFixed(2)} ${b.drinks ? '· +Pack Bebidas' : ''}[span_19](start_span)[span_19](end_span)
       </div>
       <div style="display:flex;gap:8px">
-        <button class="action-btn" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>[span_19](start_span)[span_19](end_span)
-        <button class="action-btn secondary" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>[span_20](start_span)[span_20](end_span)
+        <button class="action-btn" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>[span_20](start_span)[span_20](end_span)
+        <button class="action-btn secondary" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>[span_21](start_span)[span_21](end_span)
       </div>
     </div>
   `).join('') : '<p class="muted">No hay reservas registradas.</p>';
@@ -637,17 +642,20 @@ function toggleVehicle(id) {
   localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
   renderAdmin();
   renderVehicles();
-  notify('Disponibilidad de unidad actualizada.');
+  renderSeats();
+  updateSummary();
+  notify('Disponibilidad de unidad actualizada con éxito.');
 }
 
 function updateVehicleTime(id) {
-  const newTime = $(`time_${id}`).value;
-  vehiclesData = vehiclesData.map(v => v.id === id ? {...v, time: newTime} : v);
+  const selectedTime = $(`time_input_${id}`).value;
+  vehiclesData = vehiclesData.map(v => v.id === id ? {...v, time: selectedTime} : v);
   localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
+  renderAdmin();
   renderVehicles();
   renderSeats();
   updateSummary();
-  notify('Horario de la unidad actualizado con éxito.');
+  notify('Horario de salida actualizado correctamente.');
 }
 
 function updateBookingStatus(id, newStatus) {
@@ -656,7 +664,7 @@ function updateBookingStatus(id, newStatus) {
   renderAdmin();
   renderSeats();
   updateSummary();
-  notify('Estado de reserva actualizado.');[span_21](start_span)[span_21](end_span)
+  notify('Estado de reserva actualizado.');[span_22](start_span)[span_22](end_span)
 }
 
 function clearAllData() {
