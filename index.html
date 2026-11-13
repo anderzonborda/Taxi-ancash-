@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b1f33">
-<title>TAXI ÁNCASH | Reservas y Administración</title>
+<title>TAXI ÁNCASH | Transporte Ejecutivo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,12 +13,12 @@
   --navy-dark:#0b1f33;
   --navy:#102b46;
   --blue:#1769aa;
-  --blue-light:#eef7ff;
-  --bg:#f3f6fa;
+  --blue-light:#f0f7ff;
+  --bg:#f8fafc;
   --surface:#ffffff;
-  --ink:#172334;
+  --ink:#0f172a;
   --muted:#64748b;
-  --line:#dce4ed;
+  --line:#e2e8f0;
   --gold:#f59e0b;
   --gold-bg:#fef3c7;
   --whatsapp:#25D366;
@@ -27,13 +27,13 @@
   --green-bg:#d1fae5;
   --red:#ef4444;
   --red-bg:#fee2e2;
-  --radius:16px;
-  --shadow:0 4px 20px -2px rgba(16, 43, 70, 0.08);
+  --radius:18px;
+  --shadow:0 10px 30px -5px rgba(15, 23, 42, 0.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
 
-/* Pantalla de carga (Splash Screen con camioncito) */
+/* Pantalla de carga */
 #splash{
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:linear-gradient(135deg, var(--navy-dark), var(--navy));
@@ -43,8 +43,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);c
 #splash.fade-out{opacity:0;visibility:hidden}
 .truck-icon{
   font-size:48px;background:var(--gold);color:var(--navy-dark);
-  width:80px;height:80px;border-radius:20px;display:grid;place-items:center;
-  box-shadow:0 8px 25px rgba(245,158,11,0.4);
+  width:84px;height:84px;border-radius:22px;display:grid;place-items:center;
+  box-shadow:0 10px 30px rgba(245,158,11,0.4);
   animation: bounce 1.2s infinite alternate;
   margin-bottom:16px;
 }
@@ -52,74 +52,61 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);c
   0%{transform:translateY(0)}
   100%{transform:translateY(-10px)}
 }
-#splash h2{font-size:24px;font-weight:800;letter-spacing:1px}
-#splash p{font-size:13px;color:#cbd5e1;margin-top:4px}
+#splash h2{font-size:24px;font-weight:800;letter-spacing:0.5px}
+#splash p{font-size:13.5px;color:#cbd5e1;margin-top:4px}
 
-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:white;padding:28px 20px 45px}
+header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:white;padding:32px 20px 50px}
 .wrap,main{max-width:780px;margin:auto}
-.brand{font-size:12px;letter-spacing:2px;font-weight:800;color:#93c5fd;text-transform:uppercase}
-h1{font-size:26px;font-weight:800;margin:6px 0 4px}
+.brand{font-size:11.5px;letter-spacing:2.5px;font-weight:800;color:#93c5fd;text-transform:uppercase}
+h1{font-size:28px;font-weight:800;margin:4px 0 4px}
 header p{margin:0;color:#cbd5e1;font-size:14px}
-main{padding:0 14px 40px;margin-top:-25px;position:relative;z-index:10}
+main{padding:0 16px 45px;margin-top:-30px;position:relative;z-index:10}
 
-/* Pestañas de Navegación */
-.tabs{
-  display:flex;background:var(--surface);padding:6px;border-radius:14px;
-  box-shadow:var(--shadow);border:1px solid var(--line);gap:6px;margin-bottom:16px;
-}
-.tabs button{
-  flex:1;border:0;background:transparent;color:var(--muted);padding:10px 16px;
-  border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
-  transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.tabs button.active{
-  background:var(--navy);color:white;box-shadow:0 2px 8px rgba(16,43,70,0.25);
-}
-
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
-h2{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
+h2{font-size:16.5px;font-weight:800;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-label{display:block;font-size:13px;font-weight:700;color:#41536a;margin-bottom:6px}
-input,select{width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:11px;background:#f8fafc;font:inherit;color:var(--ink);transition:all .2s}
-input:focus,select:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+label{display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #cbd5e1;border-radius:12px;background:#f8fafc;font:inherit;color:var(--ink);transition:all .2s}
+input:focus,select:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(23,105,170,0.12)}
 .full{grid-column:1/-1}.muted{color:var(--muted);font-size:13px}
 
 /* Vehículos */
 .vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.vehicle{border:1.5px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;font-weight:700;background:white;transition:all .2s;position:relative}
-.vehicle:hover{border-color:var(--blue)}
-.vehicle.active{border-color:var(--blue);background:var(--blue-light);color:#0c5794;box-shadow:0 2px 8px rgba(23,105,170,0.15)}
+.vehicle{border:1.5px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;font-weight:700;background:white;transition:all .2s;position:relative}
+.vehicle:hover{border-color:var(--blue);transform:translateY(-1px)}
+.vehicle.active{border-color:var(--blue);background:var(--blue-light);color:#0c5794;box-shadow:0 4px 12px rgba(23,105,170,0.15)}
 .vehicle.disabled{
   opacity:0.45;background:#f1f5f9;border-color:#cbd5e1;cursor:not-allowed;text-decoration:line-through;color:#94a3b8;
 }
 .vehicle.disabled::after{
   content:'NO DISPONIBLE';position:absolute;top:50%;left:50%;transform:translate(-50%, -50%) rotate(-10deg);
-  background:#ef4444;color:white;font-size:9px;font-weight:800;padding:3px 6px;border-radius:6px;
+  background:#ef4444;color:white;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:6px;
   text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.2);
 }
-.vehicle-name{font-size:14px;font-weight:800}
-.vehicle-plate{font-size:11px;color:var(--muted);font-family:monospace;margin-top:2px}
+.vehicle-name{font-size:14.5px;font-weight:800}
+.vehicle-plate{font-size:11.5px;color:var(--muted);font-family:monospace;margin-top:3px}
+.vehicle-time{font-size:11px;color:var(--blue);font-weight:700;margin-top:4px}
 
-/* Asientos estilo cabina (Exactamente 4 asientos + piloto) */
-.cabin{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:14px;margin-top:10px}
-.cabin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.seat{border:1.5px solid #cbd5e1;border-radius:10px;padding:12px 6px;text-align:center;font-weight:700;background:white;cursor:pointer;transition:all .15s;font-size:13px;display:flex;flex-direction:column;gap:2px}
-.seat:hover:not(:disabled):not(.driver){border-color:var(--blue);background:var(--blue-light)}
+/* Asientos de la cabina */
+.cabin{background:#f8fafc;border:1.5px dashed #cbd5e1;border-radius:14px;padding:16px;margin-top:10px}
+.cabin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.seat{border:1.5px solid #cbd5e1;border-radius:12px;padding:12px 6px;text-align:center;font-weight:700;background:white;cursor:pointer;transition:all .15s;font-size:13px;display:flex;flex-direction:column;gap:2px}
+.seat:hover:not(:disabled):not(.driver){border-color:var(--blue);background:var(--blue-light);transform:translateY(-1px)}
 .seat.driver{background:#e2e8f0;border-color:#cbd5e1;color:#64748b;cursor:default;font-size:11px}
-.seat.selected{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 3px 10px rgba(23,105,170,0.3)}
+.seat.selected{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 4px 12px rgba(23,105,170,0.3)}
 .seat.taken{background:#e7ebf0;color:#9aa5b1;cursor:not-allowed;text-decoration:line-through}
 .seat small{font-size:10px;font-weight:600}
 
 /* Extras y resumen */
 .check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;cursor:pointer}
 .check input{width:18px;height:18px;accent-color:var(--blue)}
-.summary-box{background:#f8fafc;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.7}
+.summary-box{background:#f8fafc;border:1.5px solid var(--line);border-radius:14px;padding:16px;font-size:13.5px;line-height:1.75}
 .summary-box b{color:var(--navy)}
 
-.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:16px}
 button.action-btn{width:100%;border:0;border-radius:12px;background:var(--navy);color:white;padding:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-button.action-btn:hover{background:#163d61}
+button.action-btn:hover{background:#163d61;transform:translateY(-1px)}
 button.whatsapp{background:var(--whatsapp);color:#063b1b}
 button.whatsapp:hover{background:var(--whatsapp-dark)}
 button.secondary{background:#e2e8f0;color:var(--navy)}
@@ -128,7 +115,7 @@ button.danger{background:var(--red);color:white}
 button.danger:hover{background:#dc2626}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 
-.pill{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700}
 .pill.ok{background:var(--green-bg);color:#065f46}
 .pill.warn{background:var(--gold-bg);color:#92400e}
 .pill.bad{background:var(--red-bg);color:#991b1b}
@@ -136,10 +123,10 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .listitem{border-top:1px solid var(--line);padding:14px 0}
 .listitem:first-child{border-top:0;padding-top:0}
 
-.notice{background:var(--gold-bg);border:1px solid #fde68a;color:#92400e;padding:12px 14px;border-radius:11px;font-size:13px;margin:12px 0}
-footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
+.notice{background:var(--gold-bg);border:1px solid #fde68a;color:#92400e;padding:14px;border-radius:12px;font-size:13.5px;margin:14px 0}
+footer{text-align:center;color:#8290a0;font-size:12.5px;padding:16px}
 
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy-dark);color:white;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 10px 25px rgba(0,0,0,0.25);z-index:999;opacity:0;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);max-width:90vw;text-align:center}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy-dark);color:white;padding:12px 22px;border-radius:14px;font-size:13.5px;font-weight:600;box-shadow:0 10px 25px rgba(0,0,0,0.25);z-index:999;opacity:0;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);max-width:90vw;text-align:center}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 .hidden{display:none!important}
@@ -149,7 +136,6 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
 </head>
 <body>
 
-<!-- Pantalla de Carga (Splash Screen con camioncito) -->
 <div id="splash">
   <div class="truck-icon">🛻</div>
   <h2>TAXI ÁNCASH</h2>
@@ -165,19 +151,7 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
 </header>
 
 <main>
-  <!-- Pestañas de Navegación -->
-  <nav class="tabs">
-    <button id="tabBook" class="active" onclick="switchTab('book')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Reservar Asiento
-    </button>
-    <button id="tabAdmin" onclick="switchTab('admin')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Administración
-    </button>
-  </nav>
-
-  <!-- SECCIÓN: RESERVAS -->
+  <!-- SECCIÓN: RESERVAS (Vista Pública) -->
   <section id="sectionBook">
     <div class="card">
       <h2>1. Datos del viaje</h2>
@@ -187,7 +161,7 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
           <input id="date" type="date">
         </div>
         <div>
-          <label for="time">Hora de salida</label>
+          <label for="time">Hora general de referencia</label>
           <select id="time">
             <option value="19:00">7:00 p. m.</option>
             <option value="18:00">6:00 p. m.</option>
@@ -195,22 +169,18 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
           </select>
         </div>
         <div class="full">
-          <label>Elige tu vehículo</label>
-          <div class="vehicles" id="vehiclesContainer">
-            <!-- Renderizado dinámico desde JS según disponibilidad admin -->
-          </div>
+          <label>Elige tu vehículo disponible</label>
+          <div class="vehicles" id="vehiclesContainer"></div>
         </div>
       </div>
     </div>
 
     <div class="card">
       <h2>2. Selecciona tu asiento</h2>
-      <p class="muted">Distribución de la camioneta (4 asientos para pasajeros).</p>
+      <p class="muted">Distribución de la camioneta (4 asientos para pasajeros)[span_0](start_span)[span_0](end_span).</p>
       <div class="cabin">
         <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:6px">Frente de la unidad</div>
-        <div class="cabin-grid" id="seatsContainer">
-          <!-- Renderizado dinámico -->
-        </div>
+        <div class="cabin-grid" id="seatsContainer"></div>
       </div>
     </div>
 
@@ -226,7 +196,7 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
           <input id="phone" inputmode="tel" maxlength="9" placeholder="987654321">
         </div>
         <div>
-          <label for="pay">Método de adelanto (20%)</label>
+          <label for="pay">Método de adelanto (20%)[span_1](start_span)[span_1](end_span)</label>
           <select id="pay">
             <option>Yape / Plin (943000111)</option>
             <option>Transferencia BCP</option>
@@ -253,7 +223,7 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
       <div class="summary-box" id="summary">Selecciona fecha, vehículo y asiento para ver el detalle.</div>
       
       <div class="notice">
-        Tarifa base del asiento: <b>S/ 60.00</b>[span_8](start_span)[span_8](end_span). Si reservas dentro de las últimas 6 horas, aplica recargo del 20% (S/ 72.00)[span_9](start_span)[span_9](end_span).
+        Tarifa base del asiento: <b>S/ 60.00</b>[span_2](start_span)[span_2](end_span). Si reservas dentro de las últimas 6 horas, aplica recargo del 20% (S/ 72.00)[span_3](start_span)[span_3](end_span).
       </div>
 
       <div class="btn-group">
@@ -262,40 +232,40 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
       </div>
     </div>
 
-    <!-- Historial de reservas en este dispositivo -->
     <div class="card">
       <h2>Mis reservas en este dispositivo</h2>
       <div id="myBookingsList" class="muted">Ingresa tu número de celular arriba para consultar tus reservas activas.</div>
     </div>
   </section>
 
-  <!-- SECCIÓN: ADMINISTRACIÓN -->
+  <!-- SECCIÓN: ADMINISTRACIÓN PRIVADA (#admin - M1000) -->
   <section id="sectionAdmin" class="hidden">
     <div class="card">
-      <h2>Panel de Administración (Control Rápido)</h2>
-      <p class="muted" style="margin-bottom:14px">Administra la disponibilidad de vehículos, horarios y verifica los adelantos de los pasajeros.</p>
+      <h2>Panel de Control Exclusivo (#admin - M1000)</h2>
+      <p class="muted" style="margin-bottom:16px">Gestión avanzada de flota, horarios y validación de pasajeros para el usuario M1000.</p>
       
       <div id="adminLock">
         <div class="grid" style="align-items:end">
           <div>
-            <label for="adminPin">Clave de Acceso</label>
-            <input id="adminPin" type="password" placeholder="Ingresa 2026" onkeydown="if(event.key==='Enter')unlockAdmin()">
+            <label for="adminPin">Introduce tu Clave Maestra de Administrador</label>
+            <input id="adminPin" type="password" placeholder="••••••••••••••••" onkeydown="if(event.key==='Enter')unlockAdmin()">
           </div>
-          <button class="action-btn" style="height:48px" onclick="unlockAdmin()">Ingresar al Panel</button>
+          <button class="action-btn" style="height:48px" onclick="unlockAdmin()">Desbloquear Panel</button>
         </div>
       </div>
 
       <div id="adminPanelContent" class="hidden">
         <div class="grid-3" id="adminKpis" style="margin-bottom:20px"></div>
 
-        <h3 style="font-size:15px; margin:16px 0 8px; color:var(--navy)">1. Disponibilidad de Unidades (Activar / Desactivar)</h3>
-        <p class="muted" style="margin-bottom:10px">Si una unidad no está disponible, desactívala para que aparezca tachada a los pasajeros.</p>
-        <div id="adminVehiclesToggle"></div>
+        <h3 style="font-size:15px; margin:16px 0 8px; color:var(--navy)">1. Gestión de Unidades (Habilitar / Deshabilitar / Horarios)</h3>
+        <p class="muted" style="margin-bottom:10px">Modifica el horario de salida o bloquea vehículos que no operarán.</p>
+        <div id="adminVehiclesManager"></div>
 
         <h3 style="font-size:15px; margin:24px 0 8px; color:var(--navy)">2. Listado de Reservas Recibidas</h3>
         <div id="adminBookingsList"></div>
 
-        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line)">
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line); display:flex; gap:10px">
+          <button class="action-btn secondary" onclick="lockAdminSession()">Cerrar Sesión Segura</button>
           <button class="action-btn danger" onclick="clearAllData()">Reiniciar datos de prueba</button>
         </div>
       </div>
@@ -308,16 +278,18 @@ footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
 <div id="toast"></div>
 
 <script>
-// Ocultar Splash Screen
 window.addEventListener('load', () => {
   setTimeout(() => { document.querySelector('#splash').classList.add('fade-out'); }, 1200);
+  checkAdminRoute();
 });
 
-// Datos base de vehículos (pueden ser activados o desactivados por el admin)
+// CLAVE MAESTRA PRIVADA PARA EL USUARIO M1000 (#admin)
+const MASTER_ADMIN_KEY = 'AncashSecureKey_M1000_987$#';
+
 let vehiclesData = JSON.parse(localStorage.getItem('ta_vehicles') || 'null') || [
-  { id: 'Hilux', name: 'Toyota Hilux', plate: 'H3O-834', active: true },
-  { id: 'Foton', name: 'Foton Tunland', plate: 'CLB-765', active: true },
-  { id: 'Amarok', name: 'VW Amarok V6', plate: 'BAP-814', active: true }
+  { id: 'Hilux', name: 'Toyota Hilux', plate: 'H3O-834', active: true, time: '7:00 p. m.' },
+  { id: 'Foton', name: 'Foton Tunland', plate: 'CLB-765', active: true, time: '7:00 p. m.' },
+  { id: 'Amarok', name: 'VW Amarok V6', plate: 'BAP-814', active: true, time: '7:00 p. m.' }
 ];
 
 let bookings = JSON.parse(localStorage.getItem('ta_bookings') || '[]');
@@ -334,7 +306,12 @@ function notify(msg) {
   t._timer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// Configurar fechas
+function checkAdminRoute() {
+  if (window.location.hash === '#admin') {
+    switchTab('admin');
+  }
+}
+
 const today = new Date();
 today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
 const todayStr = today.toISOString().slice(0, 10);
@@ -345,14 +322,32 @@ maxDate.setDate(maxDate.getDate() + 30);
 $('date').max = maxDate.toISOString().slice(0, 10);
 
 function switchTab(tab) {
-  $('sectionBook').classList.toggle('hidden', tab !== 'book');
-  $('sectionAdmin').classList.toggle('hidden', tab !== 'admin');
-  $('tabBook').classList.toggle('active', tab === 'book');
-  $('tabAdmin').classList.toggle('active', tab === 'admin');
-  if(tab === 'admin') renderAdmin();
+  if (tab === 'admin') {
+    window.location.hash = 'admin';
+    $('sectionBook').classList.add('hidden');
+    $('sectionAdmin').classList.remove('hidden');
+    
+    if (localStorage.getItem('ta_admin_logged') === 'true') {
+      $('adminLock').classList.add('hidden');
+      $('adminPanelContent').classList.remove('hidden');
+      renderAdmin();
+    } else {
+      $('adminLock').classList.remove('hidden');
+      $('adminPanelContent').classList.add('hidden');
+    }
+  } else {
+    window.location.hash = '';
+    $('sectionBook').classList.remove('hidden');
+    $('sectionAdmin').classList.add('hidden');
+  }
 }
 
-// Renderizar vehículos en la interfaz de reserva
+window.addEventListener('hashchange', () => {
+  if (window.location.hash !== '#admin') {
+    switchTab('book');
+  }
+});
+
 function renderVehicles() {
   let html = '';
   vehiclesData.forEach(v => {
@@ -362,6 +357,7 @@ function renderVehicles() {
       <div class="${cssClass}" onclick="selectVehicle('${v.id}', ${v.active})">
         <div class="vehicle-name">${v.name}</div>
         <div class="vehicle-plate">${v.plate}</div>
+        <div class="vehicle-time">Salida: ${v.time}</div>
       </div>
     `;
   });
@@ -380,18 +376,15 @@ function selectVehicle(id, active) {
   updateSummary();
 }
 
-// Renderizar exactamente los 4 asientos de la camioneta
 function renderSeats() {
   const dateVal = $('date').value;
-  const timeVal = $('time').value;
+  const vObj = vehiclesData.find(v => v.id === selectedVehicle);
   
-  // Buscar asientos ya tomados para este vehículo, fecha y hora
   const takenSeats = bookings
-    .filter(b => b.date === dateVal && b.time === timeVal && b.vehicle === selectedVehicle && b.status !== 'Cancelada')
+    .filter(b => b.date === dateVal && b.vehicle === selectedVehicle && b.status !== 'Cancelada')
     .map(b => b.seat);
 
   let html = `<div class="seat driver"><span>Piloto</span><small>Chofer</small></div><div></div>`;
-  
   const seatLabels = { 1: 'Copiloto', 2: 'Atrás Izq.', 3: 'Centro', 4: 'Atrás Der.' };
   
   for(let i = 1; i <= 4; i++) {
@@ -421,25 +414,30 @@ function calculateTotals() {
   let isLate = false;
   let surchargeText = 'Sin recargo de última hora.';
   const dateVal = $('date').value;
-  const timeVal = $('time').value;
+  const vObj = vehiclesData.find(v => v.id === selectedVehicle);
+  const timeStr = vObj ? vObj.time : '7:00 p. m.';
 
   if (dateVal) {
-    const [h, m] = timeVal.split(':');
-    const departure = new Date(dateVal + 'T' + h + ':' + m + ':00');
+    let h = 19;
+    if(timeStr.includes('6:00')) h = 18;
+    if(timeStr.includes('8:00')) h = 20;
+    if(timeStr.includes('9:00')) h = 21;
+    
+    const departure = new Date(`${dateVal}T${String(h).padStart(2,'0')}:00:00`);
     const hours = (departure - new Date()) / 36e5;
     if (hours >= 0 && hours <= 6) {
       isLate = true;
-      surchargeText = 'Corresponde recargo de última hora del 20% sobre el pasaje (S/ 72.00)[span_10](start_span)[span_10](end_span).';
+      surchargeText = 'Corresponde recargo de última hora del 20% sobre el pasaje (S/ 72.00)[span_4](start_span)[span_4](end_span).';
     } else if (hours < 0) {
-      surchargeText = 'La hora seleccionada ya pasó.';
+      surchargeText = 'La hora de salida de esta unidad ya pasó.';
     }
   }
 
-  const seatPrice = isLate ? 72 : 60; //[span_11](start_span)[span_11](end_span)
+  const seatPrice = isLate ? 72 : 60;[span_5](start_span)[span_5](end_span)
   const packPrice = $('drinksPack').checked ? 40 : 0;
   const total = seatPrice + packPrice;
-  const deposit = total * 0.2; //[span_12](start_span)[span_12](end_span)
-  const balance = total - deposit; //[span_13](start_span)[span_13](end_span)
+  const deposit = total * 0.2;[span_6](start_span)[span_6](end_span)
+  const balance = total - deposit;[span_7](start_span)[span_7](end_span)
 
   return { isLate, surchargeText, seatPrice, packPrice, total, deposit, balance };
 }
@@ -447,12 +445,11 @@ function calculateTotals() {
 function updateSummary() {
   const dateVal = $('date').value;
   const dVal = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('es-PE', {dateStyle:'full'}) : 'Sin fecha';
-  const depTime = $('time').value;
   const vObj = vehiclesData.find(v => v.id === selectedVehicle);
   const calc = calculateTotals();
 
   $('summary').innerHTML = `
-    <b>Fecha y Hora:</b> ${dVal} a las ${depTime === '19:00' ? '7:00 p. m.' : depTime === '18:00' ? '6:00 p. m.' : '8:00 p. m.'}<br>
+    <b>Fecha y Hora de Salida:</b> ${dVal} a las ${vObj ? vObj.time : ''}<br>
     <b>Unidad:</b> ${vObj ? vObj.name : ''} (${vObj ? vObj.plate : ''})<br>
     <b>Asiento elegido:</b> ${selectedSeat ? 'Asiento #' + selectedSeat : 'Ninguno'}<br>
     <b>Pasajero:</b> ${$('passenger').value.trim() || 'No ingresado'}<br>
@@ -460,7 +457,7 @@ function updateSummary() {
     <b>Pasaje:</b> S/ ${calc.seatPrice.toFixed(2)} ${calc.isLate ? '<span style="color:#d97706;font-weight:700">(Incluye +20%)</span>' : ''}<br>
     <b>Adicional:</b> ${$('drinksPack').checked ? 'Pack de 6 bebidas (+S/ 40.00)' : 'Ninguno'}<br>
     <b>Total a pagar:</b> S/ ${calc.total.toFixed(2)}<br>
-    <b>Adelanto requerido (20%):</b> S/ ${calc.deposit.toFixed(2)} | <b>Saldo al abordar:</b> S/ ${calc.balance.toFixed(2)}[span_14](start_span)[span_14](end_span)<br>
+    <b>Adelanto requerido (20%):</b> S/ ${calc.deposit.toFixed(2)} | <b>Saldo al abordar:</b> S/ ${calc.balance.toFixed(2)}[span_8](start_span)[span_8](end_span)<br>
     <b>Estado de tiempo:</b> ${calc.surchargeText}
   `;
 
@@ -475,18 +472,18 @@ function getWhatsAppUrl(b) {
   const cleanPhone = '943000111';
   const msg = [
     `*RESERVA - TAXI ÁNCASH*`,
-    `Ruta: San Marcos ↔ Antamina[span_15](start_span)[span_15](end_span)`,
+    `Ruta: San Marcos ↔ Antamina[span_9](start_span)[span_9](end_span)`,
     `--------------------------`,
     `*Pasajero:* ${b.passenger}`,
     `*Celular:* ${b.phone}`,
-    `*Fecha:* ${b.date} (${b.time})`,
+    `*Fecha y Hora:* ${b.date} (${b.time})`,
     `*Unidad:* ${b.vehicleName} (${b.vehiclePlate})`,
     `*Asiento:* #${b.seat}`,
     `*Adicional:* ${b.drinks ? 'Pack 6 bebidas (S/ 40.00)' : 'Ninguno'}`,
     `--------------------------`,
     `*Total:* S/ ${b.total.toFixed(2)}`,
-    `*Adelanto (20%):* S/ ${b.deposit.toFixed(2)}[span_16](start_span)[span_16](end_span)`,
-    `*Saldo:* S/ ${b.balance.toFixed(2)}[span_17](start_span)[span_17](end_span)`,
+    `*Adelanto (20%):* S/ ${b.deposit.toFixed(2)}[span_10](start_span)[span_10](end_span)`,
+    `*Saldo:* S/ ${b.balance.toFixed(2)}[span_11](start_span)[span_11](end_span)`,
     `*Pago:* ${b.payMethod} (Op: ${b.operation})`,
     `_Adjunto comprobante para validación._`
   ].join('\n');
@@ -500,7 +497,7 @@ function executeReservation(openWp) {
   const newBooking = {
     id: Date.now(),
     date: $('date').value,
-    time: $('time').value,
+    time: vObj.time,
     vehicle: selectedVehicle,
     vehicleName: vObj.name,
     vehiclePlate: vObj.plate,
@@ -514,7 +511,7 @@ function executeReservation(openWp) {
     total: calc.total,
     deposit: calc.deposit,
     balance: calc.balance,
-    status: 'Pendiente de verificación[span_18](start_span)'[span_18](end_span)
+    status: 'Pendiente de verificación[span_12](start_span)'[span_12](end_span)
   };
 
   bookings.push(newBooking);
@@ -537,7 +534,7 @@ function renderMyBookings() {
   const ph = $('phone').value.trim();
   const mine = bookings.filter(b => b.phone === ph);
   if(!ph || mine.length === 0) {
-    $('myBookingsList.innerHTML' in window ? 'myBookingsList' : 'myBookingsList').innerHTML = ph.length === 9 ? 'No hay reservas registradas para este número.' : 'Ingresa tu celular de 9 dígitos arriba para ver tus reservas.';
+    $('myBookingsList').innerHTML = ph.length === 9 ? 'No hay reservas registradas para este número.' : 'Ingresa tu celular de 9 dígitos arriba para ver tus reservas.';
     return;
   }
 
@@ -545,11 +542,11 @@ function renderMyBookings() {
     <div class="listitem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <b>${b.vehicleName} · Asiento #${b.seat}</b>
-        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_19](start_span)[span_19](end_span)</span>
+        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_13](start_span)[span_13](end_span)</span>
       </div>
       <div class="muted" style="margin-top:4px">
         Fecha: <b>${b.date}</b> (${b.time})<br>
-        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod} - Op: ${b.operation})[span_20](start_span)[span_20](end_span)
+        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod} - Op: ${b.operation})[span_14](start_span)[span_14](end_span)
       </div>
       ${b.status !== 'Cancelada' ? `
         <a href="${getWhatsAppUrl(b)}" target="_blank" class="action-btn whatsapp" style="margin-top:8px;padding:8px;font-size:13px">
@@ -559,31 +556,37 @@ function renderMyBookings() {
   `).join('');
 }
 
-// Eventos de formulario
 $('reserveWeb').onclick = () => executeReservation(false);
 $('reserveWp').onclick = () => executeReservation(true);
 
-[$('date'), $('time'), $('drinksPack'), $('passenger'), $('phone'), $('pay'), $('operation')].forEach(el => {
+[$('date'), $('drinksPack'), $('passenger'), $('phone'), $('pay'), $('operation')].forEach(el => {
   el.addEventListener('input', updateSummary);
   el.addEventListener('change', () => { renderSeats(); updateSummary(); });
 });
 
-// --- PANEL DE ADMINISTRACIÓN ---
+// --- MOTOR DE ADMINISTRACIÓN PARA M1000 (#admin) ---
 function unlockAdmin() {
-  if($('adminPin').value !== '2026') {
-    notify('Clave incorrecta. Usa 2026.');
+  if($('adminPin').value !== MASTER_ADMIN_KEY) {
+    notify('Clave de administrador incorrecta.');
     return;
   }
+  localStorage.setItem('ta_admin_logged', 'true');
   $('adminLock').classList.add('hidden');
   $('adminPanelContent').classList.remove('hidden');
   renderAdmin();
-  notify('Panel de administración desbloqueado.');
+  notify('Bienvenido M1000. Acceso autorizado.');
+}
+
+function lockAdminSession() {
+  localStorage.removeItem('ta_admin_logged');
+  switchTab('book');
+  notify('Sesión de administración cerrada de forma segura.');
 }
 
 function renderAdmin() {
   const activeBookings = bookings.filter(b => b.status !== 'Cancelada');
-  const confirmedCount = bookings.filter(b => b.status.includes('confirmado')).length;[span_21](start_span)[span_21](end_span)
-  const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);[span_22](start_span)[span_22](end_span)
+  const confirmedCount = bookings.filter(b => b.status.includes('confirmado')).length;[span_15](start_span)[span_15](end_span)
+  const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);[span_16](start_span)[span_16](end_span)
 
   $('adminKpis').innerHTML = `
     <div class="card" style="padding:12px;text-align:center;margin:0"><div style="font-size:18px;font-weight:800">${activeBookings.length}</div><div class="muted">Activas</div></div>
@@ -591,30 +594,39 @@ function renderAdmin() {
     <div class="card" style="padding:12px;text-align:center;margin:0"><div style="font-size:18px;font-weight:800;color:var(--blue)">S/ ${totalDeposits.toFixed(2)}</div><div class="muted">Adelantos</div></div>
   `;
 
-  // Renderizar interruptores de vehículos
-  $('adminVehiclesToggle').innerHTML = vehiclesData.map(v => `
-    <div class="listitem" style="display:flex;justify-content:space-between;align-items:center">
-      <div><b>${v.name}</b> <span class="muted">(${v.plate})</span></div>
-      <button class="action-btn ${v.active ? 'whatsapp' : 'danger'}" style="width:auto;padding:8px 14px;font-size:12px" onclick="toggleVehicle('${v.id}')">
-        ${v.active ? 'DISPONIBLE (Activo)' : 'NO DISPONIBLE'}
-      </button>
+  $('adminVehiclesManager').innerHTML = vehiclesData.map(v => `
+    <div class="listitem" style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b>${v.name}</b> <span class="muted">(${v.plate})</span>
+        <button class="action-btn ${v.active ? 'whatsapp' : 'danger'}" style="width:auto;padding:8px 14px;font-size:12px" onclick="toggleVehicle('${v.id}')">
+          ${v.active ? 'DISPONIBLE (Activo)' : 'NO DISPONIBLE'}
+        </button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <label style="font-size:12px;margin:0;white-space:nowrap">Hora de Salida:</label>
+        <select id="time_${v.id}" onchange="updateVehicleTime('${v.id}')" style="padding:6px 10px;font-size:12px">
+          <option ${v.time==='6:00 p. m.'?'selected':''}>6:00 p. m.</option>
+          <option ${v.time==='7:00 p. m.'?'selected':''}>7:00 p. m.</option>
+          <option ${v.time==='8:00 p. m.'?'selected':''}>8:00 p. m.</option>
+          <option ${v.time==='9:00 p. m.'?'selected':''}>9:00 p. m.</option>
+        </select>
+      </div>
     </div>
   `).join('');
 
-  // Listado de reservas para validar
   $('adminBookingsList').innerHTML = bookings.length ? bookings.slice().reverse().map(b => `
     <div class="listitem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <b>${b.passenger} (${b.phone})</b>
-        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_23](start_span)[span_23](end_span)</span>
+        <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}[span_17](start_span)[span_17](end_span)</span>
       </div>
       <div class="muted" style="margin:4px 0 8px">
         Fecha: ${b.date} (${b.time}) · <b>${b.vehicleName}</b> · Asiento #${b.seat}<br>
-        Pago: ${b.payMethod} (Ref: ${b.operation}) · Adelanto: S/ ${b.deposit.toFixed(2)} ${b.drinks ? '· +Pack Bebidas' : ''}[span_24](start_span)[span_24](end_span)
+        Pago: ${b.payMethod} (Ref: ${b.operation}) · Adelanto: S/ ${b.deposit.toFixed(2)} ${b.drinks ? '· +Pack Bebidas' : ''}[span_18](start_span)[span_18](end_span)
       </div>
       <div style="display:flex;gap:8px">
-        <button class="action-btn" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>[span_25](start_span)[span_25](end_span)
-        <button class="action-btn secondary" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>[span_26](start_span)[span_26](end_span)
+        <button class="action-btn" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>[span_19](start_span)[span_19](end_span)
+        <button class="action-btn secondary" style="padding:8px;font-size:12px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>[span_20](start_span)[span_20](end_span)
       </div>
     </div>
   `).join('') : '<p class="muted">No hay reservas registradas.</p>';
@@ -628,13 +640,23 @@ function toggleVehicle(id) {
   notify('Disponibilidad de unidad actualizada.');
 }
 
+function updateVehicleTime(id) {
+  const newTime = $(`time_${id}`).value;
+  vehiclesData = vehiclesData.map(v => v.id === id ? {...v, time: newTime} : v);
+  localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
+  renderVehicles();
+  renderSeats();
+  updateSummary();
+  notify('Horario de la unidad actualizado con éxito.');
+}
+
 function updateBookingStatus(id, newStatus) {
   bookings = bookings.map(b => b.id === id ? {...b, status: newStatus} : b);
   localStorage.setItem('ta_bookings', JSON.stringify(bookings));
   renderAdmin();
   renderSeats();
   updateSummary();
-  notify('Estado de reserva actualizado.');[span_27](start_span)[span_27](end_span)
+  notify('Estado de reserva actualizado.');[span_21](start_span)[span_21](end_span)
 }
 
 function clearAllData() {
@@ -647,7 +669,6 @@ function clearAllData() {
   notify('Datos reiniciados.');
 }
 
-// Inicializar vistas
 renderVehicles();
 renderSeats();
 updateSummary();
