@@ -1,6 +1,321 @@
--- TAXI ÁNCASH: ejecutar completo en Supabase > SQL Editor
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1a2b">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'none'">
+<title>TAXI ÁNCASH | Transporte Ejecutivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f3;--surface:#fff;--ink:#0f1b29;--muted:#566677;--line:#d3dae1;--accent:#f2b705;--on-accent:#1a1400;--hero:#0b1a2b;--ok:#1b7a4b;--err:#b3261e;--wa:#25d366;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#071422;--surface:#0f2236;--ink:#eaf0f6;--muted:#8fa3b6;--line:#1f3650;--hero:#0a1c30;--ok:#5ad19a;--err:#ff8a80;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Instrument Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;margin:0;line-height:1.1}
+.wrap{max-width:560px;margin:0 auto}
+.hero{background:var(--hero);color:#eaf0f6;padding:calc(34px + env(safe-area-inset-top,0px)) 20px 0;overflow:hidden}
+.hero h1{font-weight:800;font-size:clamp(38px,11vw,60px);letter-spacing:-.02em}
+.hero p{margin:10px 0 0;color:#9fb3c6}
+.route{display:block;width:100%;height:auto;margin-top:16px}
+.ridge{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s ease-out forwards}
+.route text{fill:#eaf0f6;font:600 14px "Instrument Sans",sans-serif}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.ridge{animation:none;stroke-dashoffset:0}}
+main{padding:22px 16px 30px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+h2{font-size:22px;font-weight:800;margin-bottom:12px}
+h2 span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--on-accent);font:700 14px "Instrument Sans";margin-right:10px;vertical-align:3px}
+h3{font-size:17px;font-weight:800;margin:18px 0 6px}
+label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
+input,select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none}
+.field{margin-bottom:12px}
+.muted{color:var(--muted);font-size:14px}
+.hidden{display:none!important}
+button,.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:14px;background:var(--accent);color:var(--on-accent);cursor:pointer;width:100%;display:block;text-align:center;text-decoration:none}
+button.alt,.btn.alt{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+button.wa,.btn.wa{background:var(--wa);color:#063b1b}
+button.bad{background:var(--err);color:#fff}
+button:disabled{opacity:.5;cursor:not-allowed}
+.sm{width:auto!important;padding:9px 14px;font-size:14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.tabs button{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.tabs button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.vehicles{display:grid;gap:8px}
+.veh{text-align:left;background:var(--bg);color:var(--ink);border:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.veh[aria-pressed=true]{border:2px solid var(--accent);background:var(--surface)}
+.veh:disabled{background:repeating-linear-gradient(135deg,var(--line) 0 6px,transparent 6px 12px);color:var(--muted)}
+.veh small{display:block;color:var(--muted);font-weight:500}
+.van{margin:6px auto 0;width:min(290px,100%);border:2px solid var(--line);border-radius:44px 44px 18px 18px;padding:24px 20px 14px;background:var(--bg)}
+.wind{height:10px;border-radius:10px;background:var(--line);margin:0 18px 16px}
+.row{display:flex;gap:12px;margin-bottom:12px}
+.seat{flex:1;height:60px;border-radius:12px 12px 8px 8px;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:4px;line-height:1.2}
+.seat small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+.seat[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.seat[aria-pressed=true] small{color:var(--on-accent)}
+.seat:disabled{background:repeating-linear-gradient(135deg,var(--line) 0 6px,transparent 6px 12px)}
+.drv{flex:1;height:60px;border:2px dashed var(--line);border-radius:12px;display:grid;place-items:center;color:var(--muted);font-size:13px}
+.drop{display:block;border:2px dashed var(--line);border-radius:12px;padding:20px 14px;text-align:center;color:var(--muted);cursor:pointer}
+.drop input{display:none}
+.thumb{max-width:100%;max-height:180px;border-radius:8px;display:block;margin:8px auto 0}
+.check{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-weight:500}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+dt{color:var(--muted)}dd{margin:0;font-weight:600;text-align:right}
+.note{margin:12px 0 0;font-weight:600;font-size:14px}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700;background:var(--accent);color:var(--on-accent);white-space:nowrap}
+.pill.ok{background:var(--ok);color:#fff}.pill.no{background:var(--line);color:var(--muted)}
+.item{border-top:1px solid var(--line);padding:14px 0}.item:first-child{border-top:0;padding-top:0}
+.between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.kpi b{display:block;font:800 21px "Bricolage Grotesque"}.kpi span{font-size:12px;color:var(--muted)}
+.gap{display:grid;gap:10px;margin-top:14px}
+.acts{display:flex;gap:8px;margin-top:10px}
+.done{text-align:center}.done .tick{width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:28px;margin:0 auto 12px}
+#bar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+#bar .wrap{display:flex;align-items:center;gap:14px}
+.total{font:800 26px "Bricolage Grotesque";line-height:1;white-space:nowrap}.total small{display:block;font:500 12px "Instrument Sans";color:var(--muted);margin-bottom:2px}
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:12px;font-weight:600;font-size:14px;max-width:90vw;text-align:center;opacity:0;transition:.3s;z-index:9}
+#toast.show{transform:translate(-50%,0);opacity:1}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<h1>Taxi Áncash</h1>
+<p>Transporte ejecutivo entre San Marcos y Antamina.</p>
+<svg class="route" viewBox="0 0 560 150" role="img" aria-label="Ruta de San Marcos a Antamina">
+<path d="M0 130 C60 120 90 118 130 104 S200 100 240 84 S330 74 370 52 S450 34 560 24 L560 150 L0 150Z" fill="#ffffff0d"/>
+<path class="ridge" pathLength="1" d="M0 130 C60 120 90 118 130 104 S200 100 240 84 S330 74 370 52 S450 34 560 24"/>
+<circle cx="20" cy="127" r="6" fill="#f2b705"/><circle cx="540" cy="26" r="6" fill="#f2b705"/>
+<text x="10" y="110">San Marcos</text><text x="458" y="12">Antamina</text>
+</svg></div></header>
 
-create table profiles(
+<main><div class="wrap">
+
+<section id="sAuth" class="card hidden">
+<h2>Portal de clientes</h2>
+<p class="muted" style="margin-top:0">Entra o crea tu cuenta para reservar.</p>
+<div class="tabs"><button id="tLogin" aria-pressed="true" data-act="mode" data-m="login">Iniciar sesión</button><button id="tReg" aria-pressed="false" data-act="mode" data-m="register">Registrarse</button></div>
+<div class="field hidden" id="nameF"><label for="aName">Nombre y apellido</label><input id="aName" autocomplete="name" maxlength="80"></div>
+<div class="field"><label for="aPhone">Celular (9 dígitos)</label><input id="aPhone" inputmode="numeric" autocomplete="username" maxlength="9" placeholder="987654321"></div>
+<div class="field"><label for="aPass">Contraseña (mínimo 8 caracteres)</label><input id="aPass" type="password" autocomplete="current-password"></div>
+<button id="authBtn" data-act="auth">Entrar a mi cuenta</button>
+</section>
+
+<section id="sMain" class="hidden">
+<div class="card between"><div><div class="muted">Bienvenido</div><b id="welcome"></b></div><button class="alt sm" data-act="logout">Cerrar sesión</button></div>
+
+<div id="flow">
+<div class="card"><h2><span>1</span>Datos del viaje</h2>
+<div class="field"><label for="date">Fecha de salida</label><input id="date" type="date"></div>
+<label>Elige tu vehículo</label><div class="vehicles" id="vehicles"></div></div>
+
+<div class="card"><h2><span>2</span>Elige tu asiento</h2>
+<div class="van"><div class="wind"></div><div class="row" id="rowFront"></div><div class="row" id="rowRear"></div></div>
+<p class="muted" style="text-align:center">Rayado: ocupado. Amarillo: tu elección.</p></div>
+
+<div class="card"><h2><span>3</span>Pago con Yape o Plin</h2>
+<p class="muted" style="margin-top:0">Paga el adelanto al <b>917 791 958</b> y sube la captura.</p>
+<label class="drop"><input type="file" id="voucherFile" accept="image/*"><span id="dropTxt">Toca para subir la captura</span><img id="vImg" class="thumb hidden" alt="Captura de pago"></label></div>
+
+<div class="card"><h2><span>4</span>Adicionales</h2>
+<label class="check"><input id="drinks" type="checkbox"><span>Pack de 6 bebidas por S/ 40.00<br><span class="muted">Se entrega durante el viaje y se suma al total.</span></span></label></div>
+
+<div class="card"><h2><span>5</span>Tu reserva</h2>
+<dl id="summary"></dl><p class="note" id="note"></p>
+<p class="muted">Tarifa base S/ 60.00 por asiento. Con menos de 6 horas de anticipación se suma 20% (S/ 72.00).</p></div>
+</div>
+
+<div id="done" class="card done hidden"><div class="tick">✓</div><h2>Reserva registrada</h2>
+<p class="muted">Administración revisará tu captura y confirmará tu asiento. Envía el resumen por WhatsApp para agilizarlo.</p>
+<div class="gap"><a id="waLink" class="btn wa" href="#" target="_blank" rel="noopener noreferrer">Enviar resumen por WhatsApp</a><button class="alt" data-act="again">Hacer otra reserva</button></div></div>
+
+<div class="card"><h2>Mis viajes</h2><div id="mine" class="muted"></div></div>
+</section>
+
+<section id="sAdmin" class="card hidden">
+<div class="between"><h2 style="margin:0">Panel de control</h2><button class="alt sm" data-act="refresh">Actualizar</button></div>
+<p id="denied" class="muted hidden">Esta sección es solo para administradores. Entra con una cuenta de administrador.</p>
+<div id="adminBody">
+<div class="kpis" style="margin-top:14px" id="kpis"></div>
+<h3>Vehículos y ocupación</h3><div id="adminVeh"></div>
+<h3>Reservas y capturas de pago</h3><div id="adminBook"></div>
+<div class="acts" style="margin-top:20px"><button class="alt" data-act="logout">Cerrar sesión</button></div>
+</div></section>
+
+</div></main>
+
+<div id="bar" class="hidden"><div class="wrap"><div class="total"><small>Total</small><span id="total">S/ 0.00</span></div><button id="cta" data-act="reserve" disabled>Reservar</button></div></div>
+<div id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL='https://TU-PROYECTO.supabase.co';
+const SUPABASE_ANON_KEY='TU-CLAVE-ANON-PUBLICA';
+const WA='51917791958';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'S/ '+Number(n).toFixed(2);
+const HOURS={'6:00 p. m.':18,'7:00 p. m.':19,'8:00 p. m.':20,'9:00 p. m.':21};
+const emailOf=p=>p+'@clientes.taxiancash.pe';
+let me=null,vehicles=[],selVeh=null,selSeat=null,taken=[],blob=null,busy=false,mode='login',lastBooking=null;
+
+function notify(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3800)}
+
+/* ---------- sesión y rutas ---------- */
+async function setSession(s){
+ me=null;
+ if(s){const{data}=await sb.from('profiles').select('*').eq('id',s.user.id).single();me=data}
+ route();
+}
+async function route(){
+ const adm=location.hash==='#admin';
+ const view=!me?'auth':adm?'admin':'main';
+ $('sAuth').classList.toggle('hidden',view!=='auth');
+ $('sMain').classList.toggle('hidden',view!=='main');
+ $('sAdmin').classList.toggle('hidden',view!=='admin');
+ $('bar').classList.add('hidden');
+ if(view==='admin'){
+  $('denied').classList.toggle('hidden',me.is_admin);$('adminBody').classList.toggle('hidden',!me.is_admin);
+  if(me.is_admin)await renderAdmin();
+ }else if(view==='main'){
+  $('welcome').textContent=me.name+' ('+me.phone+')';
+  $('flow').classList.remove('hidden');$('done').classList.add('hidden');
+  await loadVehicles();await loadTaken();renderAll();renderMine();
+ }
+}
+window.addEventListener('hashchange',route);
+(async()=>{const{data:{session}}=await sb.auth.getSession();setSession(session)})();
+
+async function doAuth(){
+ if(busy)return;
+ const phone=$('aPhone').value.trim(),pass=$('aPass').value,name=$('aName').value.trim();
+ if(!/^\d{9}$/.test(phone))return notify('El celular debe tener 9 dígitos.');
+ if(pass.length<8)return notify('La contraseña debe tener al menos 8 caracteres.');
+ if(mode==='register'&&!name)return notify('Escribe tu nombre y apellido.');
+ busy=true;$('authBtn').disabled=true;
+ const r=mode==='register'?await sb.auth.signUp({email:emailOf(phone),password:pass,options:{data:{name}}}):await sb.auth.signInWithPassword({email:emailOf(phone),password:pass});
+ busy=false;$('authBtn').disabled=false;
+ if(r.error){
+  const m=/registered|already/i.test(r.error.message)?'Este número ya está registrado. Inicia sesión.':mode==='login'?'Número o contraseña incorrectos.':'No se pudo crear la cuenta. Revisa tus datos.';
+  return notify(m);
+ }
+ if(!r.data.session)return notify('Cuenta creada. Inicia sesión.');
+ $('aPass').value='';notify(mode==='register'?'Cuenta creada con éxito.':'Bienvenido.');
+ setSession(r.data.session);
+}
+
+/* ---------- reserva ---------- */
+async function loadVehicles(){
+ const{data}=await sb.from('vehicles').select('*').order('id');vehicles=data||[];
+ const cur=vehicles.find(v=>v.id===selVeh);
+ if(!cur||!cur.active)selVeh=(vehicles.find(v=>v.active)||{}).id||null;
+}
+async function loadTaken(){
+ const d=$('date').value;taken=[];
+ if(d&&selVeh){const{data}=await sb.rpc('taken_seats',{d,v:selVeh});taken=data||[]}
+ if(taken.includes(selSeat))selSeat=null;
+}
+function calc(){
+ const v=vehicles.find(x=>x.id===selVeh),date=$('date').value;let late=false,past=false;
+ if(v&&date){const dep=new Date(`${date}T${String(HOURS[v.depart_time]||19).padStart(2,'0')}:00:00-05:00`),h=(dep-new Date())/36e5;late=h>=0&&h<=6;past=h<0}
+ const seat=late?72:60,pack=$('drinks').checked?40:0,total=seat+pack;
+ return{late,past,seat,pack,total,deposit:total*.2,balance:total*.8,v};
+}
+function renderAll(){
+ $('vehicles').innerHTML=vehicles.map(v=>`<button class="veh" aria-pressed="${selVeh===v.id}" ${v.active?'':'disabled'} data-act="veh" data-id="${esc(v.id)}"><span>${esc(v.name)}<small>${esc(v.plate)}</small></span><span class="muted">${v.active?'Salida '+esc(v.depart_time):'No disponible'}</span></button>`).join('');
+ const L={1:'Copiloto',2:'Atrás izq.',3:'Centro',4:'Atrás der.'};
+ const seat=i=>{const t=taken.includes(i);return `<button class="seat" aria-pressed="${selSeat===i}" ${t?'disabled':''} data-act="seat" data-n="${i}">Asiento ${i}<small>${t?'Ocupado':L[i]}</small></button>`};
+ $('rowFront').innerHTML='<div class="drv">Chofer</div>'+seat(1);$('rowRear').innerHTML=seat(2)+seat(3)+seat(4);
+ const c=calc(),date=$('date').value;
+ const when=date?new Date(date+'T12:00:00').toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'})+(c.v?', '+c.v.depart_time:''):'Sin fecha';
+ $('summary').innerHTML=`<dt>Salida</dt><dd>${esc(when)}</dd><dt>Unidad</dt><dd>${c.v?esc(c.v.name):'-'}</dd><dt>Asiento</dt><dd>${selSeat?'N.º '+selSeat:'Sin elegir'}</dd><dt>Pasaje</dt><dd>${money(c.seat)}${c.late?' (+20%)':''}</dd><dt>Bebidas</dt><dd>${c.pack?money(c.pack):'No'}</dd><dt>Adelanto (20%)</dt><dd>${money(c.deposit)}</dd><dt>Saldo al abordar</dt><dd>${money(c.balance)}</dd>`;
+ $('total').textContent=money(selSeat?c.total:0);
+ let msg='Todo listo. Toca Reservar.',col='var(--ok)',label='Reservar',off=false;
+ if(!c.v){msg='No hay unidades disponibles.';col='var(--err)';label='Sin unidades';off=true}
+ else if(c.past){msg='Esa hora de salida ya pasó. Elige otra fecha.';col='var(--err)';label='Elige otra fecha';off=true}
+ else if(!selSeat){msg='Elige un asiento.';col='var(--muted)';label='Elige un asiento';off=true}
+ else if(!blob){msg='Sube la captura de tu pago.';col='var(--muted)';label='Sube tu captura';off=true}
+ else if(c.late){msg='Reserva de último momento: se aplicó el recargo de 20%.';col='var(--err)'}
+ $('note').textContent=msg;$('note').style.color=col;
+ $('cta').textContent=busy?'Reservando…':label;$('cta').disabled=off||busy;
+ $('bar').classList.toggle('hidden',!$('done').classList.contains('hidden'));
+}
+function compress(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const k=Math.min(1,1280/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>b?res(b):rej(),'image/jpeg',.8)};img.onerror=rej;img.src=u})}
+async function pickVoucher(e){
+ const f=e.target.files[0];if(!f)return;
+ try{blob=await compress(f);$('vImg').src=URL.createObjectURL(blob);$('vImg').classList.remove('hidden');$('dropTxt').textContent='Captura lista. Toca para cambiarla.'}
+ catch{blob=null;notify('Esa imagen no se pudo leer. Prueba con otra.')}
+ renderAll();
+}
+function waUrl(b){
+ const m=['*RESERVA - TAXI ÁNCASH*','Ruta: San Marcos ↔ Antamina','--------------------------',`*Pasajero:* ${me.name}`,`*Celular:* ${me.phone}`,`*Fecha:* ${b.trip_date} (${b.vehicles.depart_time||''})`,`*Unidad:* ${b.vehicles.name} (${b.vehicles.plate})`,`*Asiento:* #${b.seat}`,`*Adicional:* ${b.drinks?'Pack 6 bebidas (S/ 40.00)':'Ninguno'}`,'--------------------------',`*Total:* ${money(b.total)}`,`*Adelanto (20%):* ${money(b.deposit)}`,`*Saldo:* ${money(b.balance)}`,'*Pago:* Yape / Plin (captura subida al portal)'].join('\n');
+ return `https://wa.me/${WA}?text=${encodeURIComponent(m)}`;
+}
+async function reserve(){
+ if(busy||!blob||!selSeat)return;
+ busy=true;renderAll();
+ const path=`${me.id}/${Date.now()}.jpg`;
+ const up=await sb.storage.from('vouchers').upload(path,blob,{contentType:'image/jpeg'});
+ if(up.error){busy=false;renderAll();return notify('No se pudo subir la captura. Intenta de nuevo.')}
+ const{data,error}=await sb.from('bookings').insert({trip_date:$('date').value,vehicle_id:selVeh,seat:selSeat,drinks:$('drinks').checked,voucher_path:path}).select('*, vehicles(name,plate,depart_time)').single();
+ busy=false;
+ if(error){
+  await sb.storage.from('vouchers').remove([path]);
+  notify(error.code==='23505'?'Ese asiento ya fue reservado. Elige otro.':error.code==='P0001'?error.message:'No se pudo registrar la reserva.');
+  await loadTaken();return renderAll();
+ }
+ lastBooking=data;blob=null;selSeat=null;$('voucherFile').value='';$('vImg').classList.add('hidden');$('dropTxt').textContent='Toca para subir la captura';
+ $('waLink').href=waUrl(data);$('flow').classList.add('hidden');$('done').classList.remove('hidden');$('bar').classList.add('hidden');
+ scrollTo({top:0,behavior:'smooth'});renderMine();
+}
+async function renderMine(){
+ const{data}=await sb.from('bookings').select('*, vehicles(name)').eq('user_id',me.id).order('created_at',{ascending:false});
+ $('mine').innerHTML=(data&&data.length)?data.map(b=>`<div class="item"><div class="between"><b>${esc(b.vehicles.name)}, asiento ${b.seat}</b><span class="pill ${b.status==='Confirmada'?'ok':b.status==='Cancelada'?'no':''}">${esc(b.status)}</span></div><div class="muted" style="margin-top:4px">${esc(b.trip_date)}. Total ${money(b.total)}, adelanto ${money(b.deposit)}.</div></div>`).join(''):'Aún no tienes viajes registrados.';
+}
+
+/* ---------- administración (solo cuentas con is_admin en la base de datos) ---------- */
+async function renderAdmin(){
+ const[vs,bs]=await Promise.all([sb.from('vehicles').select('*').order('id'),sb.from('bookings').select('*, profiles(name,phone), vehicles(name,plate)').order('created_at',{ascending:false})]);
+ if(vs.error||bs.error)return notify('No se pudieron cargar los datos.');
+ const B=bs.data,act=B.filter(b=>b.status!=='Cancelada');
+ $('kpis').innerHTML=`<div class="kpi"><b>${act.length}</b><span>Activas</span></div><div class="kpi"><b>${B.filter(b=>b.status==='Confirmada').length}</b><span>Confirmadas</span></div><div class="kpi"><b>${money(act.reduce((a,b)=>a+Number(b.deposit),0))}</b><span>Adelantos</span></div>`;
+ $('adminVeh').innerHTML=vs.data.map(v=>`<div class="item"><div class="between"><div><b>${esc(v.name)}</b> <span class="muted">${esc(v.plate)}</span><div class="muted">Reservas activas: ${act.filter(b=>b.vehicle_id===v.id).length}</div></div><button class="sm ${v.active?'wa':'bad'}" data-act="vtoggle" data-id="${esc(v.id)}" data-on="${v.active}">${v.active?'Disponible':'No disponible'}</button></div><div class="field" style="margin:10px 0 0"><label for="ti_${esc(v.id)}">Hora de salida</label><select id="ti_${esc(v.id)}" data-act="vtime" data-id="${esc(v.id)}">${Object.keys(HOURS).map(h=>`<option ${v.depart_time===h?'selected':''}>${h}</option>`).join('')}</select></div></div>`).join('');
+ $('adminBook').innerHTML=B.length?B.map(b=>`<div class="item"><div class="between"><b>${esc(b.profiles.name)} (${esc(b.profiles.phone)})</b><span class="pill ${b.status==='Confirmada'?'ok':b.status==='Cancelada'?'no':''}">${esc(b.status)}</span></div><div class="muted" style="margin-top:6px">${esc(b.trip_date)}. ${esc(b.vehicles.name)}, asiento ${b.seat}.<br>Adelanto ${money(b.deposit)}, saldo ${money(b.balance)}${b.drinks?', con pack de bebidas':''}.</div><div id="v_${b.id}"></div><div class="acts">${b.voucher_path?`<button class="alt sm" data-act="voucher" data-id="${b.id}" data-path="${esc(b.voucher_path)}">Ver captura</button>`:''}<button class="sm" data-act="bstatus" data-id="${b.id}" data-s="Confirmada">Confirmar</button><button class="alt sm" data-act="bstatus" data-id="${b.id}" data-s="Cancelada">Cancelar</button></div></div>`).join(''):'<p class="muted">No hay reservas registradas.</p>';
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click',async e=>{
+ const el=e.target.closest('[data-act]');if(!el||el.tagName==='SELECT')return;const a=el.dataset.act;
+ if(a==='mode'){mode=el.dataset.m;$('tLogin').setAttribute('aria-pressed',mode==='login');$('tReg').setAttribute('aria-pressed',mode==='register');$('nameF').classList.toggle('hidden',mode==='login');$('authBtn').textContent=mode==='login'?'Entrar a mi cuenta':'Crear mi cuenta';$('aPass').autocomplete=mode==='login'?'current-password':'new-password'}
+ else if(a==='auth')doAuth();
+ else if(a==='logout'){await sb.auth.signOut();history.replaceState(null,'',location.pathname);setSession(null);notify('Sesión cerrada.')}
+ else if(a==='veh'){selVeh=el.dataset.id;selSeat=null;await loadTaken();renderAll()}
+ else if(a==='seat'){selSeat=+el.dataset.n;renderAll()}
+ else if(a==='reserve')reserve();
+ else if(a==='again'){$('flow').classList.remove('hidden');$('done').classList.add('hidden');await loadTaken();renderAll()}
+ else if(a==='refresh')renderAdmin();
+ else if(a==='vtoggle'){const r=await sb.from('vehicles').update({active:el.dataset.on!=='true'}).eq('id',el.dataset.id);notify(r.error?'No se pudo actualizar.':'Disponibilidad actualizada.');renderAdmin()}
+ else if(a==='bstatus'){const r=await sb.from('bookings').update({status:el.dataset.s}).eq('id',el.dataset.id);notify(r.error?'No se pudo actualizar.':'Reserva '+el.dataset.s.toLowerCase()+'.');renderAdmin()}
+ else if(a==='voucher'){const{data,error}=await sb.storage.from('vouchers').createSignedUrl(el.dataset.path,300);if(error)return notify('No se pudo abrir la captura.');$('v_'+el.dataset.id).innerHTML=`<img class="thumb" style="margin-left:0" alt="Captura de pago" src="${esc(data.signedUrl)}">`}
+});
+document.addEventListener('change',async e=>{
+ const el=e.target;
+ if(el.dataset.act==='vtime'){const r=await sb.from('vehicles').update({depart_time:el.value}).eq('id',el.dataset.id);notify(r.error?'No se pudo actualizar.':'Horario actualizado.');renderAdmin()}
+});
+$('voucherFile').addEventListener('change',pickVoucher);
+$('drinks').addEventListener('change',renderAll);
+$('date').addEventListener('change',async()=>{selSeat=null;await loadTaken();renderAll()});
+$('aPass').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth()});
+const d0=new Date();d0.setMinutes(d0.getMinutes()-d0.getTimezoneOffset());
+const dm=new Date(d0);dm.setDate(dm.getDate()+30);
+$('date').min=$('date').value=d0.toISOString().slice(0,10);$('date').max=dm.toISOString().slice(0,10);
+</script>
+</body>
+</html>rofiles(
   id uuid primary key references auth.users on delete cascade,
   name text not null,
   phone text unique not null check (phone ~ '^\d{9}$'),
