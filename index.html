@@ -37,7 +37,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
 
-/* Pantalla de Carga */
 #splash{
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:linear-gradient(135deg, var(--navy-dark), var(--navy));
@@ -92,7 +91,6 @@ input:focus,select:focus{
 }
 .full{grid-column:1/-1}.muted{color:var(--muted);font-size:13px}
 
-/* Zona de Carga de Yape */
 .upload-box{
   border:2px dashed #cbd5e1;background:#f8fafc;border-radius:14px;
   padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;
@@ -101,7 +99,6 @@ input:focus,select:focus{
 .upload-box input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}
 .preview-img{max-height:100px;border-radius:10px;margin-top:10px;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
 
-/* Flota de Vehículos */
 .vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .vehicle{
   border:2px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;
@@ -126,7 +123,6 @@ input:focus,select:focus{
 .vehicle-plate{font-size:11.5px;color:var(--muted);font-family:monospace;margin-top:3px}
 .vehicle-time{font-size:11px;color:var(--blue);font-weight:800;margin-top:4px}
 
-/* Cabina y Asientos */
 .cabin{
   background:linear-gradient(135deg, #f8fafc, #edf2f7);
   border:2px dashed #cbd5e1;border-radius:14px;padding:16px;margin-top:10px;
@@ -148,7 +144,6 @@ input:focus,select:focus{
 .seat.taken{background:#e2e8f0;color:#94a3b8;cursor:not-allowed;text-decoration:line-through;box-shadow:none}
 .seat small{font-size:10px;font-weight:600}
 
-/* Extras y Resumen */
 .check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;cursor:pointer}
 .check input{width:18px;height:18px;accent-color:var(--blue);border-radius:4px}
 .summary-box{
@@ -388,23 +383,15 @@ footer{text-align:center;color:#94a3b8;font-size:12.5px;padding:16px}
 <div id="toast"></div>
 
 <script>
-window.addEventListener('load', () => {
-  setTimeout(() => { document.querySelector('#splash').classList.add('fade-out'); }, 1200);
-  checkInitialState();
-});
-
 const MASTER_ADMIN_KEY = 'AncashSecureKey_M1000_987$#';
 const OFFICIAL_WHATSAPP = '51917791958';
 
-let users = JSON.parse(localStorage.getItem('ta_users') || '[]');
-let currentUser = JSON.parse(localStorage.getItem('ta_current_user') || 'null');
-let vehiclesData = JSON.parse(localStorage.getItem('ta_vehicles') || 'null') || [
-  { id: 'Hilux', name: 'Toyota Hilux', plate: 'H3O-834', active: true, time: '7:00 p. m.' },
-  { id: 'Foton', name: 'Foton Tunland', plate: 'CLB-765', active: true, time: '7:00 p. m.' },
-  { id: 'Amarok', name: 'VW Amarok V6', plate: 'BAP-814', active: true, time: '7:00 p. m.' }
-];
-let bookings = JSON.parse(localStorage.getItem('ta_bookings') || '[]');
-let selectedVehicle = vehiclesData.find(v => v.active)?.id || 'Hilux';
+// Estado global sincronizado
+let users = [];
+let currentUser = null;
+let vehiclesData = [];
+let bookings = [];
+let selectedVehicle = 'Hilux';
 let selectedSeat = null;
 let voucherBase64 = '';
 
@@ -418,7 +405,47 @@ function notify(msg) {
   t._timer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+// Sincronización automática de datos entre pestañas y dispositivos
+function loadAppData() {
+  users = JSON.parse(localStorage.getItem('ta_users') || '[]');
+  currentUser = JSON.parse(localStorage.getItem('ta_current_user') || 'null');
+  
+  // Vehículos por defecto
+  const defaultVehicles = [
+    { id: 'Hilux', name: 'Toyota Hilux', plate: 'H3O-834', active: true, time: '7:00 p. m.' },
+    { id: 'Foton', name: 'Foton Tunland', plate: 'CLB-765', active: true, time: '7:00 p. m.' },
+    { id: 'Amarok', name: 'VW Amarok V6', plate: 'BAP-814', active: true, time: '7:00 p. m.' }
+  ];
+  vehiclesData = JSON.parse(localStorage.getItem('ta_vehicles') || 'null') || defaultVehicles;
+  bookings = JSON.parse(localStorage.getItem('ta_bookings') || '[]');
+}
+
+function saveAppData() {
+  localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
+  localStorage.setItem('ta_bookings', JSON.stringify(bookings));
+  localStorage.setItem('ta_users', JSON.stringify(users));
+}
+
+// Escuchar cambios externos en tiempo real (cuando se actualiza desde otra pestaña o dispositivo conectado)
+window.addEventListener('storage', (e) => {
+  loadAppData();
+  if (window.location.hash === '#admin' && localStorage.getItem('ta_admin_logged') === 'true') {
+    renderAdmin();
+  } else if (currentUser) {
+    renderVehicles();
+    renderSeats();
+    updateSummary();
+  }
+});
+
+window.addEventListener('load', () => {
+  loadAppData();
+  setTimeout(() => { document.querySelector('#splash').classList.add('fade-out'); }, 1200);
+  checkInitialState();
+});
+
 function checkInitialState() {
+  loadAppData();
   if (window.location.hash === '#admin') {
     switchTab('admin');
   } else if (currentUser) {
@@ -456,6 +483,7 @@ function switchAuthMode(mode) {
 }
 
 function handleRegister() {
+  loadAppData();
   const name = $('regName').value.trim();
   const phone = $('regPhone').value.trim();
   const pass = $('regPass').value.trim();
@@ -482,6 +510,7 @@ function handleRegister() {
 }
 
 function handleLogin() {
+  loadAppData();
   const phone = $('loginPhone').value.trim();
   const pass = $('loginPass').value.trim();
 
@@ -505,6 +534,7 @@ function logoutUser() {
 }
 
 function switchTab(tab) {
+  loadAppData();
   if (tab === 'admin') {
     window.location.hash = 'admin';
     $('sectionAuth').classList.add('hidden');
@@ -561,8 +591,10 @@ function previewVoucher(event) {
 }
 
 function renderVehicles() {
+  loadAppData();
   let html = '';
   const activeVehicles = vehiclesData.filter(v => v.active);
+  
   if (!vehiclesData.find(v => v.id === selectedVehicle)?.active && activeVehicles.length > 0) {
     selectedVehicle = activeVehicles[0].id;
   }
@@ -594,6 +626,7 @@ function selectVehicle(id, active) {
 }
 
 function renderSeats() {
+  loadAppData();
   const dateVal = $('date').value;
   
   const takenSeats = bookings
@@ -706,6 +739,7 @@ function getWhatsAppUrl(b) {
 }
 
 function executeReservation(openWp) {
+  loadAppData();
   const vObj = vehiclesData.find(v => v.id === selectedVehicle);
   const calc = calculateTotals();
   
@@ -730,7 +764,7 @@ function executeReservation(openWp) {
   };
 
   bookings.push(newBooking);
-  localStorage.setItem('ta_bookings', JSON.stringify(bookings));
+  saveAppData();
   
   voucherBase64 = '';
   $('voucherPreviewContainer').classList.add('hidden');
@@ -748,6 +782,7 @@ function executeReservation(openWp) {
 }
 
 function renderMyBookings() {
+  loadAppData();
   const mine = bookings.filter(b => b.phone === currentUser.phone);
   if(mine.length === 0) {
     $('myBookingsList').innerHTML = 'Aún no tienes viajes registrados en tu cuenta.';
@@ -801,6 +836,7 @@ function lockAdminSession() {
 }
 
 function renderAdmin() {
+  loadAppData();
   const activeBookings = bookings.filter(b => b.status !== 'Cancelada');
   const confirmedCount = bookings.filter(b => b.status.includes('confirmado')).length;
   const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);
@@ -859,25 +895,28 @@ function renderAdmin() {
 }
 
 function toggleVehicle(id) {
+  loadAppData();
   vehiclesData = vehiclesData.map(v => v.id === id ? {...v, active: !v.active} : v);
-  localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
+  saveAppData();
   renderAdmin();
   if(currentUser) { renderVehicles(); renderSeats(); updateSummary(); }
-  notify('Disponibilidad de unidad actualizada con éxito.');
+  notify('Disponibilidad de unidad actualizada y sincronizada.');
 }
 
 function updateVehicleTime(id) {
+  loadAppData();
   const selectedTime = $(`time_input_${id}`).value;
   vehiclesData = vehiclesData.map(v => v.id === id ? {...v, time: selectedTime} : v);
-  localStorage.setItem('ta_vehicles', JSON.stringify(vehiclesData));
+  saveAppData();
   renderAdmin();
   if(currentUser) { renderVehicles(); renderSeats(); updateSummary(); }
-  notify('Horario de salida actualizado correctamente.');
+  notify('Horario de salida sincronizado correctamente.');
 }
 
 function updateBookingStatus(id, newStatus) {
+  loadAppData();
   bookings = bookings.map(b => b.id === id ? {...b, status: newStatus} : b);
-  localStorage.setItem('ta_bookings', JSON.stringify(bookings));
+  saveAppData();
   renderAdmin();
   if(currentUser) { renderSeats(); updateSummary(); }
   notify('Estado de reserva actualizado.');
@@ -887,6 +926,7 @@ function clearAllData() {
   if(!confirm('¿Deseas reiniciar todas las reservas guardadas?')) return;
   localStorage.removeItem('ta_bookings');
   bookings = [];
+  saveAppData();
   renderAdmin();
   if(currentUser) { renderSeats(); updateSummary(); }
   notify('Datos reiniciados.');
