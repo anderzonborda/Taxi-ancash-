@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b1f33">
-<title>TAXI ÁNCASH | Sistema de Clientes y Administración</title>
+<meta name="theme-color" content="#071422">
+<title>TAXI ÁNCASH | Transporte Ejecutivo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy-dark:#071422;
+  --navy-dark:#050f1a;
   --navy:#0b1f33;
-  --navy-light:#143454;
+  --navy-light:#122d48;
   --blue:#1d75bc;
   --blue-hover:#155e96;
   --blue-light:#f0f7ff;
-  --bg:#f1f5f9;
+  --bg:#f8fafc;
   --surface:#ffffff;
   --ink:#0f172a;
   --muted:#64748b;
@@ -29,81 +29,89 @@
   --green-bg:#d1fae5;
   --red:#ef4444;
   --red-bg:#fee2e2;
-  --radius:22px;
-  --shadow-sm:0 4px 12px rgba(15, 23, 42, 0.04);
-  --shadow-md:0 12px 35px -8px rgba(15, 23, 42, 0.08);
-  --shadow-lg:0 20px 45px -10px rgba(15, 23, 42, 0.12);
+  --radius:20px;
+  --shadow-sm:0 4px 16px rgba(15, 23, 42, 0.04);
+  --shadow-md:0 12px 30px -6px rgba(15, 23, 42, 0.08);
+  --shadow-lg:0 20px 40px -10px rgba(15, 23, 42, 0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
 
-/* Pantalla de Carga (Splash Screen Profesional) */
+/* Pantalla de Carga */
 #splash{
   position:fixed;top:0;left:0;width:100%;height:100%;
-  background:linear-gradient(145deg, var(--navy-dark), var(--navy));
+  background:linear-gradient(135deg, var(--navy-dark), var(--navy));
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   z-index:9999;color:white;transition:opacity 0.4s ease, visibility 0.4s ease;
 }
 #splash.fade-out{opacity:0;visibility:hidden}
 .truck-icon{
-  font-size:52px;background:var(--gold);color:var(--navy-dark);
-  width:90px;height:90px;border-radius:26px;display:grid;place-items:center;
-  box-shadow:0 15px 35px rgba(245,158,11,0.35);
+  font-size:48px;background:var(--gold);color:var(--navy-dark);
+  width:88px;height:88px;border-radius:24px;display:grid;place-items:center;
+  box-shadow:0 12px 30px rgba(245,158,11,0.4);
   animation: bounce 1.2s infinite alternate;
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 @keyframes bounce{
   0%{transform:translateY(0)}
-  100%{transform:translateY(-12px)}
+  100%{transform:translateY(-10px)}
 }
-#splash h2{font-size:26px;font-weight:800;letter-spacing:1px}
-#splash p{font-size:14px;color:#93c5fd;margin-top:4px}
+#splash h2{font-size:24px;font-weight:800;letter-spacing:1px}
+#splash p{font-size:13.5px;color:#93c5fd;margin-top:4px}
 
-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:white;padding:36px 20px 60px;box-shadow:0 10px 30px rgba(7,20,34,0.2)}
-.wrap,main{max-width:780px;margin:auto}
-.brand{font-size:12px;letter-spacing:3px;font-weight:800;color:#93c5fd;text-transform:uppercase}
-h1{font-size:30px;font-weight:800;margin:6px 0 4px}
-header p{margin:0;color:#cbd5e1;font-size:14.5px}
-main{padding:0 16px 50px;margin-top:-38px;position:relative;z-index:10}
+header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:white;padding:36px 20px 64px;box-shadow:0 10px 30px rgba(7,20,34,0.15)}
+.wrap,main{max-width:760px;margin:auto}
+.brand{font-size:11.5px;letter-spacing:3px;font-weight:800;color:#93c5fd;text-transform:uppercase}
+h1{font-size:28px;font-weight:800;margin:4px 0 4px}
+header p{margin:0;color:#cbd5e1;font-size:14px}
+main{padding:0 16px 50px;margin-top:-40px;position:relative;z-index:10}
 
-/* Tarjetas con profundidad avanzada */
 .card{
   background:var(--surface);
-  border:1px solid rgba(226, 232, 240, 0.8);
+  border:1px solid rgba(226, 232, 240, 0.9);
   border-radius:var(--radius);
-  padding:26px;
-  margin-bottom:18px;
+  padding:24px;
+  margin-bottom:16px;
   box-shadow:var(--shadow-md);
-  transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:all 0.25s ease;
 }
 .card:hover{box-shadow:var(--shadow-lg)}
 
-h2{font-size:17.5px;font-weight:800;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+h2{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 
-label{display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px}
+label{display:block;font-size:12.5px;font-weight:700;color:#334155;margin-bottom:6px}
 input,select{
-  width:100%;padding:13px 16px;border:2px solid #e2e8f0;border-radius:14px;
-  background:#f8fafc;font:inherit;color:var(--ink);transition:all .25s ease;
+  width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;
+  background:#f8fafc;font:inherit;color:var(--ink);transition:all .2s ease;
 }
 input:focus,select:focus{
   outline:none;border-color:var(--blue);background:white;
-  box-shadow:0 0 0 5px rgba(29,117,188,0.12);
+  box-shadow:0 0 0 4px rgba(29,117,188,0.12);
 }
-.full{grid-column:1/-1}.muted{color:var(--muted);font-size:13.5px}
+.full{grid-column:1/-1}.muted{color:var(--muted);font-size:13px}
 
-/* Flota de Vehículos Mejorada */
-.vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+/* Zona de Carga de Yape */
+.upload-box{
+  border:2px dashed #cbd5e1;background:#f8fafc;border-radius:14px;
+  padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;
+}
+.upload-box:hover{border-color:var(--blue);background:var(--blue-light)}
+.upload-box input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.preview-img{max-height:100px;border-radius:10px;margin-top:10px;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+
+/* Flota de Vehículos */
+.vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .vehicle{
-  border:2px solid var(--line);border-radius:16px;padding:16px 10px;text-align:center;
-  cursor:pointer;font-weight:700;background:white;transition:all .25s ease;position:relative;
+  border:2px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;
+  cursor:pointer;font-weight:700;background:white;transition:all .2s ease;position:relative;
   box-shadow:var(--shadow-sm);
 }
-.vehicle:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.vehicle:hover{border-color:var(--blue);transform:translateY(-1px)}
 .vehicle.active{
   border-color:var(--blue);background:var(--blue-light);color:#0c5794;
-  box-shadow:0 8px 20px rgba(29,117,188,0.18);
+  box-shadow:0 6px 16px rgba(29,117,188,0.15);
 }
 .vehicle.disabled{
   opacity:0.45;background:#f1f5f9;border-color:#cbd5e1;cursor:not-allowed;text-decoration:line-through;color:#94a3b8;
@@ -111,82 +119,80 @@ input:focus,select:focus{
 }
 .vehicle.disabled::after{
   content:'NO DISPONIBLE';position:absolute;top:50%;left:50%;transform:translate(-50%, -50%) rotate(-10deg);
-  background:var(--red);color:white;font-size:10px;font-weight:800;padding:4px 8px;border-radius:6px;
-  text-decoration:none;box-shadow:0 4px 10px rgba(239,68,68,0.3);
+  background:var(--red);color:white;font-size:9.5px;font-weight:800;padding:3px 6px;border-radius:6px;
+  text-decoration:none;box-shadow:0 3px 8px rgba(239,68,68,0.3);
 }
-.vehicle-name{font-size:15px;font-weight:800}
-.vehicle-plate{font-size:12px;color:var(--muted);font-family:monospace;margin-top:4px}
-.vehicle-time{font-size:11.5px;color:var(--blue);font-weight:800;margin-top:6px}
+.vehicle-name{font-size:14px;font-weight:800}
+.vehicle-plate{font-size:11.5px;color:var(--muted);font-family:monospace;margin-top:3px}
+.vehicle-time{font-size:11px;color:var(--blue);font-weight:800;margin-top:4px}
 
-/* Cabina y Asientos con Relieve */
+/* Cabina y Asientos */
 .cabin{
-  background:linear-gradient(145deg, #f8fafc, #edf2f7);
-  border:2px dashed #cbd5e1;border-radius:16px;padding:18px;margin-top:12px;
-  box-shadow:inset 0 2px 6px rgba(0,0,0,0.03);
+  background:linear-gradient(135deg, #f8fafc, #edf2f7);
+  border:2px dashed #cbd5e1;border-radius:14px;padding:16px;margin-top:10px;
 }
-.cabin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+.cabin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
 .seat{
-  border:2px solid #cbd5e1;border-radius:14px;padding:14px 8px;text-align:center;
-  font-weight:700;background:white;cursor:pointer;transition:all .2s ease;font-size:13.5px;
-  display:flex;flex-direction:column;gap:3px;box-shadow:var(--shadow-sm);
+  border:2px solid #cbd5e1;border-radius:12px;padding:12px 6px;text-align:center;
+  font-weight:700;background:white;cursor:pointer;transition:all .15s ease;font-size:13px;
+  display:flex;flex-direction:column;gap:2px;box-shadow:var(--shadow-sm);
 }
 .seat:hover:not(:disabled):not(.driver){
-  border-color:var(--blue);background:var(--blue-light);transform:translateY(-2px);box-shadow:var(--shadow-md);
+  border-color:var(--blue);background:var(--blue-light);transform:translateY(-1px);
 }
-.seat.driver{background:#e2e8f0;border-color:#cbd5e1;color:#64748b;cursor:default;font-size:11.5px;box-shadow:none}
+.seat.driver{background:#e2e8f0;border-color:#cbd5e1;color:#64748b;cursor:default;font-size:11px;box-shadow:none}
 .seat.selected{
   background:var(--blue);color:white;border-color:var(--blue);
-  box-shadow:0 8px 20px rgba(29,117,188,0.35);transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(29,117,188,0.3);transform:translateY(-1px);
 }
 .seat.taken{background:#e2e8f0;color:#94a3b8;cursor:not-allowed;text-decoration:line-through;box-shadow:none}
-.seat small{font-size:10.5px;font-weight:600}
+.seat small{font-size:10px;font-weight:600}
 
 /* Extras y Resumen */
-.check{display:flex;align-items:center;gap:12px;font-size:14.5px;font-weight:600;cursor:pointer}
-.check input{width:20px;height:20px;accent-color:var(--blue);border-radius:4px}
+.check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--blue);border-radius:4px}
 .summary-box{
-  background:linear-gradient(145deg, #f8fafc, #edf2f7);
-  border:2px solid var(--line);border-radius:16px;padding:18px;font-size:14px;line-height:1.8;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,0.02);
+  background:linear-gradient(135deg, #f8fafc, #edf2f7);
+  border:2px solid var(--line);border-radius:14px;padding:16px;font-size:13.5px;line-height:1.75;
 }
 .summary-box b{color:var(--navy)}
 
-.btn-group{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:16px}
 button.action-btn{
-  width:100%;border:0;border-radius:14px;background:var(--navy);color:white;
-  padding:15px;font-size:15.5px;font-weight:800;cursor:pointer;transition:all .25s ease;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 6px 20px rgba(16,43,70,0.2);
+  width:100%;border:0;border-radius:12px;background:var(--navy);color:white;
+  padding:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s ease;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 15px rgba(16,43,70,0.2);
 }
-button.action-btn:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 10px 25px rgba(16,43,70,0.3)}
-button.whatsapp{background:var(--whatsapp);color:#063b1b;box-shadow:0 6px 20px rgba(37,211,102,0.25)}
-button.whatsapp:hover{background:var(--whatsapp-dark);box-shadow:0 10px 25px rgba(37,211,102,0.35)}
+button.action-btn:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:0 8px 20px rgba(16,43,70,0.25)}
+button.whatsapp{background:var(--whatsapp);color:#063b1b;box-shadow:0 4px 15px rgba(37,211,102,0.2)}
+button.whatsapp:hover{background:var(--whatsapp-dark);box-shadow:0 8px 20px rgba(37,211,102,0.3)}
 button.secondary{background:#e2e8f0;color:var(--navy);box-shadow:none}
 button.secondary:hover{background:#cbd5e1}
-button.danger{background:var(--red);color:white;box-shadow:0 6px 20px rgba(239,68,68,0.25)}
+button.danger{background:var(--red);color:white;box-shadow:0 4px 15px rgba(239,68,68,0.2)}
 button.danger:hover{background:#dc2626}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 
-.pill{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:800}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:800}
 .pill.ok{background:var(--green-bg);color:#065f46}
 .pill.warn{background:var(--gold-bg);color:#92400e}
 .pill.bad{background:var(--red-bg);color:#991b1b}
 
-.listitem{border-top:1px solid var(--line);padding:16px 0}
+.listitem{border-top:1px solid var(--line);padding:14px 0}
 .listitem:first-child{border-top:0;padding-top:0}
 
 .notice{
   background:var(--gold-bg);border:1.5px solid #fde68a;color:#92400e;
-  padding:16px;border-radius:14px;font-size:14px;margin:16px 0;
-  box-shadow:0 4px 15px rgba(245,158,11,0.08);
+  padding:14px;border-radius:12px;font-size:13.5px;margin:14px 0;
+  box-shadow:0 2px 10px rgba(245,158,11,0.06);
 }
-footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
+footer{text-align:center;color:#94a3b8;font-size:12.5px;padding:16px}
 
 #toast{
-  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);
-  background:var(--navy-dark);color:white;padding:14px 26px;border-radius:16px;
-  font-size:14px;font-weight:700;box-shadow:0 15px 35px rgba(0,0,0,0.3);
-  z-index:999;opacity:0;transition:all .35s cubic-bezier(0.16, 1, 0.3, 1);
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--navy-dark);color:white;padding:12px 22px;border-radius:14px;
+  font-size:13.5px;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  z-index:999;opacity:0;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);
   max-width:90vw;text-align:center;border:1px solid rgba(255,255,255,0.1);
 }
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
@@ -213,14 +219,14 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
 </header>
 
 <main>
-  <!-- SECCIÓN: AUTENTICACIÓN DE CLIENTES (Login / Registro) -->
+  <!-- SECCIÓN: AUTENTICACIÓN DE CLIENTES -->
   <section id="sectionAuth" class="card">
-    <div style="text-align:center; margin-bottom:18px">
+    <div style="text-align:center; margin-bottom:16px">
       <h2 style="justify-content:center">Portal de Clientes</h2>
-      <p class="muted">Inicia sesión o crea tu cuenta personal para reservar y ver tu historial de viajes.</p>
+      <p class="muted">Inicia sesión o crea tu cuenta personal para reservar en segundos.</p>
     </div>
 
-    <div style="display:flex; background:#e2e8f0; padding:4px; border-radius:12px; margin-bottom:18px">
+    <div style="display:flex; background:#e2e8f0; padding:4px; border-radius:12px; margin-bottom:16px">
       <button id="btnTabLogin" style="flex:1; border:0; padding:10px; border-radius:10px; font-weight:800; background:white; color:var(--navy); cursor:pointer" onclick="switchAuthMode('login')">Iniciar Sesión</button>
       <button id="btnTabRegister" style="flex:1; border:0; padding:10px; border-radius:10px; font-weight:800; background:transparent; color:var(--muted); cursor:pointer" onclick="switchAuthMode('register')">Registrarse</button>
     </div>
@@ -236,7 +242,7 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
           <input id="loginPass" type="password" placeholder="••••••••">
         </div>
       </div>
-      <button class="action-btn" style="margin-top:16px" onclick="handleLogin()">Entrar a mi Cuenta</button>
+      <button class="action-btn" style="margin-top:14px" onclick="handleLogin()">Entrar a mi Cuenta</button>
     </div>
 
     <div id="formRegister" class="hidden">
@@ -254,18 +260,18 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
           <input id="regPass" type="password" placeholder="••••••••">
         </div>
       </div>
-      <button class="action-btn" style="margin-top:16px" onclick="handleRegister()">Crear mi Cuenta</button>
+      <button class="action-btn" style="margin-top:14px" onclick="handleRegister()">Crear mi Cuenta</button>
     </div>
   </section>
 
-  <!-- SECCIÓN: APLICACIÓN PRINCIPAL DE RESERVAS (Visible al iniciar sesión) -->
+  <!-- SECCIÓN: APLICACIÓN PRINCIPAL DE RESERVAS -->
   <section id="sectionMainApp" class="hidden">
     <div class="card" style="display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg, var(--navy), var(--navy-dark)); color:white">
       <div>
-        <div style="font-size:12px; color:#93c5fd; font-weight:800; text-transform:uppercase">Bienvenido</div>
-        <div id="userWelcomeName" style="font-size:18px; font-weight:800"></div>
+        <div style="font-size:11.5px; color:#93c5fd; font-weight:800; text-transform:uppercase">Bienvenido</div>
+        <div id="userWelcomeName" style="font-size:17px; font-weight:800"></div>
       </div>
-      <button class="action-btn secondary" style="width:auto; padding:8px 14px; font-size:12.5px" onclick="logoutUser()">Cerrar Sesión</button>
+      <button class="action-btn secondary" style="width:auto; padding:8px 12px; font-size:12px" onclick="logoutUser()">Cerrar Sesión</button>
     </div>
 
     <div class="card">
@@ -294,25 +300,22 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
       <h2>2. Selecciona tu asiento</h2>
       <p class="muted">Distribución ejecutiva de la camioneta (4 asientos para pasajeros).</p>
       <div class="cabin">
-        <div class="muted" style="font-size:11.5px;font-weight:800;text-transform:uppercase;margin-bottom:8px;letter-spacing:1px">Frente de la unidad (Cabina)</div>
+        <div class="muted" style="font-size:11px;font-weight:800;text-transform:uppercase;margin-bottom:6px;letter-spacing:1px">Frente de la unidad (Cabina)</div>
         <div class="cabin-grid" id="seatsContainer"></div>
       </div>
     </div>
 
     <div class="card">
-      <h2>3. Datos de pago</h2>
-      <div class="grid">
-        <div>
-          <label for="pay">Método de adelanto (20%)</label>
-          <select id="pay">
-            <option>Yape / Plin (917 791 958)</option>
-            <option>Transferencia BCP</option>
-          </select>
-        </div>
-        <div>
-          <label for="operation">N.° de operación / Referencia</label>
-          <input id="operation" placeholder="N.° de váucher">
-        </div>
+      <h2>3. Adjunta captura de Yape / Plin</h2>
+      <p class="muted" style="margin-bottom:10px">Sube la foto de tu comprobante de pago al <b>917 791 958</b>.</p>
+      <div class="upload-box">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--blue); margin:0 auto 4px"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <div style="font-size:13px; font-weight:700; color:var(--blue)">Toca aquí para subir o pegar la foto de tu Yape</div>
+        <input type="file" id="voucherFile" accept="image/*" onchange="previewVoucher(event)">
+      </div>
+      <div id="voucherPreviewContainer" class="hidden" style="margin-top:10px; text-align:center">
+        <span class="pill ok">✓ Captura cargada con éxito</span>
+        <div><img id="voucherPreviewImg" class="preview-img" alt="Voucher Yape"></div>
       </div>
     </div>
 
@@ -349,7 +352,7 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
   <section id="sectionAdmin" class="hidden">
     <div class="card">
       <h2>Panel de Control Ejecutivo (#admin - M1000)</h2>
-      <p class="muted" style="margin-bottom:18px">Gestión de flota, estadísticas de ocupación de vehículos y validación de comprobantes de pago.</p>
+      <p class="muted" style="margin-bottom:16px">Gestión de flota, estadísticas de ocupación y verificación de capturas de Yape.</p>
       
       <div id="adminLock">
         <div class="grid" style="align-items:end">
@@ -357,21 +360,21 @@ footer{text-align:center;color:#94a3b8;font-size:13px;padding:20px}
             <label for="adminPin">Introduce tu Clave Maestra de Administrador</label>
             <input id="adminPin" type="password" placeholder="••••••••••••••••" onkeydown="if(event.key==='Enter')unlockAdmin()">
           </div>
-          <button class="action-btn" style="height:50px" onclick="unlockAdmin()">Desbloquear Panel</button>
+          <button class="action-btn" style="height:46px" onclick="unlockAdmin()">Desbloquear Panel</button>
         </div>
       </div>
 
       <div id="adminPanelContent" class="hidden">
-        <div class="grid-3" id="adminKpis" style="margin-bottom:22px"></div>
+        <div class="grid-3" id="adminKpis" style="margin-bottom:20px"></div>
 
-        <h3 style="font-size:16px; margin:18px 0 10px; color:var(--navy); font-weight:800">1. Estado y Ocupación de Vehículos en Tiempo Real</h3>
-        <p class="muted" style="margin-bottom:12px">Controla cuántos asientos ocupados tiene cada unidad y ajusta su disponibilidad/horarios.</p>
+        <h3 style="font-size:15.5px; margin:16px 0 8px; color:var(--navy); font-weight:800">1. Estado y Ocupación de Vehículos en Tiempo Real</h3>
+        <p class="muted" style="margin-bottom:10px">Controla cuántos asientos ocupados tiene cada unidad y ajusta su disponibilidad/horarios.</p>
         <div id="adminVehiclesManager"></div>
 
-        <h3 style="font-size:16px; margin:26px 0 10px; color:var(--navy); font-weight:800">2. Historial de Reservas y Comprobantes de Pago</h3>
+        <h3 style="font-size:15.5px; margin:24px 0 8px; color:var(--navy); font-weight:800">2. Historial de Reservas y Capturas de Yape</h3>
         <div id="adminBookingsList"></div>
 
-        <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--line); display:flex; gap:12px">
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line); display:flex; gap:10px">
           <button class="action-btn secondary" onclick="lockAdminSession()">Cerrar Sesión Segura</button>
           <button class="action-btn danger" onclick="clearAllData()">Reiniciar datos de prueba</button>
         </div>
@@ -403,6 +406,7 @@ let vehiclesData = JSON.parse(localStorage.getItem('ta_vehicles') || 'null') || 
 let bookings = JSON.parse(localStorage.getItem('ta_bookings') || '[]');
 let selectedVehicle = vehiclesData.find(v => v.active)?.id || 'Hilux';
 let selectedSeat = null;
+let voucherBase64 = '';
 
 const $ = id => document.getElementById(''+id);
 
@@ -541,6 +545,21 @@ window.addEventListener('hashchange', () => {
   }
 });
 
+function previewVoucher(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      voucherBase64 = e.target.result;
+      $('voucherPreviewImg').src = voucherBase64;
+      $('voucherPreviewContainer').classList.remove('hidden');
+      notify('¡Captura de Yape cargada con éxito!');
+      updateSummary();
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
 function renderVehicles() {
   let html = '';
   const activeVehicles = vehiclesData.filter(v => v.active);
@@ -658,7 +677,7 @@ function updateSummary() {
     <b>Estado de tiempo:</b> ${calc.surchargeText}
   `;
 
-  const isValid = dateVal && selectedSeat && $('operation').value.trim();
+  const isValid = dateVal && selectedSeat && voucherBase64 !== '';
   $('reserveWeb').disabled = !isValid;
   $('reserveWp').disabled = !isValid;
 
@@ -680,8 +699,8 @@ function getWhatsAppUrl(b) {
     `*Total:* S/ ${b.total.toFixed(2)}`,
     `*Adelanto (20%):* S/ ${b.deposit.toFixed(2)}`,
     `*Saldo:* S/ ${b.balance.toFixed(2)}`,
-    `*Pago:* ${b.payMethod} (Op: ${b.operation})`,
-    `_Adjunto comprobante para validación._`
+    `*Pago:* Yape / Plin (Adjunto captura de pago)`,
+    `_Reserva realizada desde Portal Web._`
   ].join('\n');
   return `https://wa.me/${OFFICIAL_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
@@ -700,8 +719,8 @@ function executeReservation(openWp) {
     seat: selectedSeat,
     passenger: currentUser.name,
     phone: currentUser.phone,
-    payMethod: $('pay').value,
-    operation: $('operation').value.trim(),
+    payMethod: 'Yape / Plin (917 791 958)',
+    voucherImg: voucherBase64,
     drinks: $('drinksPack').checked,
     seatPrice: calc.seatPrice,
     total: calc.total,
@@ -713,7 +732,9 @@ function executeReservation(openWp) {
   bookings.push(newBooking);
   localStorage.setItem('ta_bookings', JSON.stringify(bookings));
   
-  $('operation').value = '';
+  voucherBase64 = '';
+  $('voucherPreviewContainer').classList.add('hidden');
+  $('voucherFile').value = '';
   selectedSeat = null;
   renderSeats();
   updateSummary();
@@ -722,7 +743,7 @@ function executeReservation(openWp) {
     notify('Reserva guardada. Abriendo WhatsApp oficial...');
     window.open(getWhatsAppUrl(newBooking), '_blank');
   } else {
-    notify('¡Reserva registrada con éxito! Administración validará tu adelanto.');
+    notify('¡Reserva registrada con éxito! Administración validará tu captura.');
   }
 }
 
@@ -739,9 +760,10 @@ function renderMyBookings() {
         <b>${b.vehicleName} · Asiento #${b.seat}</b>
         <span class="pill ${b.status.includes('confirmado') ? 'ok' : 'warn'}">${b.status}</span>
       </div>
-      <div class="muted" style="margin-top:4px">
+      <div class="muted" style="margin-top:6px">
         Fecha: <b>${b.date}</b> (${b.time})<br>
-        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod} - Op: ${b.operation})
+        Adelanto: S/ ${b.deposit.toFixed(2)} (${b.payMethod})
+        ${b.voucherImg ? '<br>📸 <i>Captura de Yape adjunta</i>' : ''}
       </div>
       ${b.status !== 'Cancelada' ? `
         <a href="${getWhatsAppUrl(b)}" target="_blank" class="action-btn whatsapp" style="margin-top:10px;padding:10px;font-size:13px">
@@ -754,8 +776,7 @@ function renderMyBookings() {
 $('reserveWeb').onclick = () => executeReservation(false);
 $('reserveWp').onclick = () => executeReservation(true);
 
-[$('date'), $('drinksPack'), $('pay'), $('operation')].forEach(el => {
-  el.addEventListener('input', updateSummary);
+[$('date'), $('drinksPack')].forEach(el => {
   el.addEventListener('change', () => { renderSeats(); updateSummary(); });
 });
 
@@ -785,28 +806,27 @@ function renderAdmin() {
   const totalDeposits = activeBookings.reduce((acc, b) => acc + b.deposit, 0);
 
   $('adminKpis').innerHTML = `
-    <div class="card" style="padding:14px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:20px;font-weight:800">${activeBookings.length}</div><div class="muted">Reservas Activas</div></div>
-    <div class="card" style="padding:14px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:20px;font-weight:800;color:var(--green)">${confirmedCount}</div><div class="muted">Confirmadas</div></div>
-    <div class="card" style="padding:14px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:20px;font-weight:800;color:var(--blue)">S/ ${totalDeposits.toFixed(2)}</div><div class="muted">Total Adelantos</div></div>
+    <div class="card" style="padding:12px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:18px;font-weight:800">${activeBookings.length}</div><div class="muted">Reservas Activas</div></div>
+    <div class="card" style="padding:12px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:18px;font-weight:800;color:var(--green)">${confirmedCount}</div><div class="muted">Confirmadas</div></div>
+    <div class="card" style="padding:12px;text-align:center;margin:0;box-shadow:var(--shadow-sm)"><div style="font-size:18px;font-weight:800;color:var(--blue)">S/ ${totalDeposits.toFixed(2)}</div><div class="muted">Total Adelantos</div></div>
   `;
 
-  // Renderizar gestión de vehículos con contador de asientos ocupados en tiempo real
   $('adminVehiclesManager').innerHTML = vehiclesData.map(v => {
     const seatsCount = activeBookings.filter(b => b.vehicle === v.id).length;
     return `
-      <div class="listitem" style="display:flex;flex-direction:column;gap:12px">
+      <div class="listitem" style="display:flex;flex-direction:column;gap:10px">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div>
             <b>${v.name}</b> <span class="muted">(${v.plate})</span>
             <div style="font-size:12px; font-weight:700; color:var(--blue); margin-top:2px">Asientos ocupados en total: ${seatsCount} / 4</div>
           </div>
-          <button class="action-btn ${v.active ? 'whatsapp' : 'danger'}" style="width:auto;padding:10px 16px;font-size:12.5px" onclick="toggleVehicle('${v.id}')">
+          <button class="action-btn ${v.active ? 'whatsapp' : 'danger'}" style="width:auto;padding:8px 14px;font-size:12px" onclick="toggleVehicle('${v.id}')">
             ${v.active ? 'DISPONIBLE (Activo)' : 'NO DISPONIBLE'}
           </button>
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <label style="font-size:12.5px;margin:0;white-space:nowrap">Hora de Salida:</label>
-          <select id="time_input_${v.id}" onchange="updateVehicleTime('${v.id}')" style="padding:8px 12px;font-size:12.5px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <label style="font-size:12px;margin:0;white-space:nowrap">Hora de Salida:</label>
+          <select id="time_input_${v.id}" onchange="updateVehicleTime('${v.id}')" style="padding:6px 10px;font-size:12px">
             <option value="6:00 p. m." ${v.time==='6:00 p. m.'?'selected':''}>6:00 p. m.</option>
             <option value="7:00 p. m." ${v.time==='7:00 p. m.'?'selected':''}>7:00 p. m.</option>
             <option value="8:00 p. m." ${v.time==='8:00 p. m.'?'selected':''}>8:00 p. m.</option>
@@ -817,7 +837,6 @@ function renderAdmin() {
     `;
   }).join('');
 
-  // Historial detallado con comprobantes de pago (N.° de operación)
   $('adminBookingsList').innerHTML = bookings.length ? bookings.slice().reverse().map(b => `
     <div class="listitem">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -828,12 +847,12 @@ function renderAdmin() {
         📅 <b>Fecha y Hora:</b> ${b.date} (${b.time})<br>
         🛻 <b>Vehículo:</b> ${b.vehicleName} (${b.vehiclePlate}) · 💺 <b>Asiento:</b> #${b.seat}<br>
         💳 <b>Método de Pago:</b> ${b.payMethod}<br>
-        🔢 <b>Comprobante / N.° Operación:</b> <b style="color:var(--navy); background:#e2e8f0; padding:2px 6px; border-radius:6px">${b.operation}</b><br>
-        💰 <b>Adelanto (20%):</b> S/ ${b.deposit.toFixed(2)} | <b>Saldo:</b> S/ ${b.balance.toFixed(2)} ${b.drinks ? '· 🥤 (Incluye Pack Bebidas)' : ''}
+        💰 <b>Adelanto (20%):</b> S/ ${b.deposit.toFixed(2)} | <b>Saldo:</b> S/ ${b.balance.toFixed(2)} ${b.drinks ? '· 🥤 (Incluye Pack Bebidas)' : ''}<br>
+        ${b.voucherImg ? `<div style="margin-top:8px">📸 <b>Captura de Yape:</b><br><img src="${b.voucherImg}" style="max-height:110px; border-radius:8px; margin-top:4px; box-shadow:var(--shadow-sm)"></div>` : ''}
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="action-btn" style="padding:10px;font-size:13px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>
-        <button class="action-btn secondary" style="padding:10px;font-size:13px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>
+      <div style="display:flex;gap:8px">
+        <button class="action-btn" style="padding:8px;font-size:12.5px" onclick="updateBookingStatus(${b.id}, 'Adelanto verificado · asiento confirmado')">Verificar y Confirmar</button>
+        <button class="action-btn secondary" style="padding:8px;font-size:12.5px" onclick="updateBookingStatus(${b.id}, 'Cancelada')">Cancelar</button>
       </div>
     </div>
   `).join('') : '<p class="muted">No hay reservas registradas.</p>';
