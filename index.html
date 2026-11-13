@@ -1,307 +1,338 @@
-
-
 <!doctype html>
-
 <html lang="es">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="theme-color" content="#102b46">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1f33">
 <title>TAXI ÁNCASH | Reservas</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-
-:root{--navy:#102b46;--blue:#1769aa;--bg:#f3f6fa;--muted:#64748b;--line:#dce4ed}
-
-*{box-sizing:border-box}
-
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:#172334}
-
-header{background:var(--navy);color:white;padding:25px 18px 30px}
-
-header .wrap,main{max-width:760px;margin:auto}
-
-.brand{font-size:13px;letter-spacing:2px;font-weight:800;color:#b9d9f3}
-
-h1{font-size:30px;margin:7px 0 4px}
-
-header p{margin:0;color:#d8e7f5}
-
-main{padding:18px 14px 40px}
-
-.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px #102b4608}
-
-h2{font-size:18px;margin:0 0 14px}
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
+:root{
+  --navy-dark:#0b1f33;
+  --navy:#102b46;
+  --blue:#1769aa;
+  --blue-light:#eef7ff;
+  --bg:#f3f6fa;
+  --surface:#ffffff;
+  --ink:#172334;
+  --muted:#64748b;
+  --line:#dce4ed;
+  --gold:#f59e0b;
+  --gold-bg:#fef3c7;
+  --whatsapp:#25D366;
+  --whatsapp-dark:#1ebe5d;
+  --radius:16px;
+  --shadow:0 4px 20px -2px rgba(16, 43, 70, 0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:white;padding:28px 20px 45px}
+.wrap,main{max-width:760px;margin:auto}
+.brand{font-size:12px;letter-spacing:2px;font-weight:800;color:#93c5fd;text-transform:uppercase}
+h1{font-size:26px;font-weight:800;margin:6px 0 4px}
+header p{margin:0;color:#cbd5e1;font-size:14px}
+main{padding:0 14px 40px;margin-top:-25px;position:relative;z-index:10}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+h2{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 label{display:block;font-size:13px;font-weight:700;color:#41536a;margin-bottom:6px}
+input,select{width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:11px;background:#f8fafc;font:inherit;color:var(--ink);transition:all .2s}
+input:focus,select:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.full{grid-column:1/-1}.muted{color:var(--muted);font-size:13px}
 
-input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:11px;background:white;font:inherit;color:#172334}
+/* Vehículos */
+.vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.vehicle{border:1.5px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;font-weight:700;background:white;transition:all .2s}
+.vehicle:hover{border-color:var(--blue)}
+.vehicle.active{border-color:var(--blue);background:var(--blue-light);color:#0c5794;box-shadow:0 2px 8px rgba(23,105,170,0.15)}
+.vehicle-name{font-size:14px;font-weight:800}
+.vehicle-plate{font-size:11px;color:var(--muted);font-family:monospace;margin-top:2px}
 
-.full{grid-column:1/-1}
+/* Asientos estilo cabina */
+.cabin{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:14px;margin-top:10px}
+.cabin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.seat{border:1.5px solid #cbd5e1;border-radius:10px;padding:12px 6px;text-align:center;font-weight:700;background:white;cursor:pointer;transition:all .15s;font-size:13px;display:flex;flex-direction:column;gap:2px}
+.seat:hover:not(:disabled):not(.driver){border-color:var(--blue);background:var(--blue-light)}
+.seat.driver{background:#e2e8f0;border-color:#cbd5e1;color:#64748b;cursor:default;font-size:11px}
+.seat.selected{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 3px 10px rgba(23,105,170,0.3)}
+.seat.taken{background:#e7ebf0;color:#9aa5b1;cursor:not-allowed;text-decoration:line-through}
+.seat small{font-size:10px;font-weight:600}
 
-.muted{color:var(--muted);font-size:13px}
+/* Extras y resumen */
+.check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--blue)}
+.summary-box{background:#f8fafc;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.7}
+.summary-box b{color:var(--navy)}
 
-.vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+button.action-btn{width:100%;border:0;border-radius:12px;background:var(--navy);color:white;padding:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+button.action-btn:hover{background:#163d61}
+button.whatsapp{background:var(--whatsapp);color:#063b1b}
+button.whatsapp:hover{background:var(--whatsapp-dark)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 
-.vehicle{border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;background:white}
+.notice{background:var(--gold-bg);border:1px solid #fde68a;color:#92400e;padding:12px 14px;border-radius:11px;font-size:13px;margin:12px 0}
+footer{text-align:center;color:#8290a0;font-size:12px;padding:15px}
 
-.vehicle.active{border:2px solid var(--blue);background:#eef7ff;color:#0c5794}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy-dark);color:white;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 10px 25px rgba(0,0,0,0.25);z-index:999;opacity:0;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-
-.seat{border:1px solid #b9c7d6;border-radius:10px;padding:12px 4px;text-align:center;font-weight:700;background:#fff;cursor:pointer}
-
-.seat.selected{background:#1769aa;color:white;border-color:#1769aa}
-
-button{width:100%;border:0;border-radius:12px;background:var(--blue);color:white;padding:14px;font-size:16px;font-weight:800;cursor:pointer}
-
-button:disabled{opacity:.45;cursor:not-allowed}
-
-.notice{background:#fff8e6;border:1px solid #f4d58b;color:#76530b;padding:11px;border-radius:11px;font-size:13px}
-
-.summary{line-height:1.8}
-
-footer{text-align:center;color:#8290a0;font-size:12px;padding:10px}
-
-@media(max-width:520px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.vehicles{grid-template-columns:1fr 1fr 1fr}}
-
+@media(max-width:520px){.grid{grid-template-columns:1fr}.vehicles{grid-template-columns:1fr}}
 </style>
-
 </head>
-
 <body>
-
 <header>
-
-<div class="wrap">
-
-<div class="brand">SERVICIO DE TRANSPORTE</div>
-
-<h1>TAXI ÁNCASH</h1>
-
-<p>Reserva tu asiento de manera sencilla</p>
-
-</div>
-
+  <div class="wrap">
+    <div class="brand">Transporte Ejecutivo</div>
+    <h1>TAXI ÁNCASH</h1>
+    <p>San Marcos ↔ Antamina · Reserva tu asiento con anticipación</p>
+  </div>
 </header>
 
 <main>
+  <section class="card">
+    <h2>1. Datos del viaje</h2>
+    <div class="grid">
+      <div>
+        <label for="date">Fecha de salida</label>
+        <input id="date" type="date">
+      </div>
+      <div>
+        <label for="time">Hora de salida</label>
+        <select id="time">
+          <option value="19:00">7:00 p. m.</option>
+          <option value="18:00">6:00 p. m.</option>
+          <option value="20:00">8:00 p. m.</option>
+        </select>
+      </div>
+      <div class="full">
+        <label>Elige tu vehículo</label>
+        <div class="vehicles" id="vehicles">
+          <div class="vehicle active" data-v="Hilux" data-plate="H3O-834">
+            <div class="vehicle-name">Toyota Hilux</div>
+            <div class="vehicle-plate">H3O-834</div>
+          </div>
+          <div class="vehicle" data-v="Foton" data-plate="CLB-765">
+            <div class="vehicle-name">Foton Tunland</div>
+            <div class="vehicle-plate">CLB-765</div>
+          </div>
+          <div class="vehicle" data-v="Amarok" data-plate="BAP-814">
+            <div class="vehicle-name">VW Amarok V6</div>
+            <div class="vehicle-plate">BAP-814</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="card">
+  <section class="card">
+    <h2>2. Selecciona tu asiento</h2>
+    <p class="muted">Distribución interna de la camioneta. Elige un espacio libre.</p>
+    <div class="cabin">
+      <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:6px">Frente de la unidad</div>
+      <div class="cabin-grid">
+        <div class="seat driver"><span>Piloto</span><small>Chofer</small></div>
+        <div></div>
+        <button type="button" class="seat" data-seat="1"><span>Asiento 1</span><small>Copiloto</small></button>
+        <button type="button" class="seat" data-seat="2"><span>Asiento 2</span><small>Atrás Izq.</small></button>
+        <button type="button" class="seat" data-seat="3"><span>Asiento 3</span><small>Centro</small></button>
+        <button type="button" class="seat" data-seat="4"><span>Asiento 4</span><small>Atrás Der.</small></button>
+      </div>
+    </div>
+  </section>
 
-<h2>1. Datos del viaje</h2>
+  <section class="card">
+    <h2>3. Datos del pasajero y pago</h2>
+    <div class="grid">
+      <div>
+        <label for="passenger">Nombre y apellido</label>
+        <input id="passenger" placeholder="Tu nombre completo">
+      </div>
+      <div>
+        <label for="phone">Celular (9 dígitos)</label>
+        <input id="phone" inputmode="tel" maxlength="9" placeholder="987654321">
+      </div>
+      <div>
+        <label for="pay">Método de adelanto (20%)</label>
+        <select id="pay">
+          <option>Yape / Plin (943000111)</option>
+          <option>Transferencia BCP</option>
+        </select>
+      </div>
+      <div>
+        <label for="operation">N.° de operación / Referencia</label>
+        <input id="operation" placeholder="N.° de váucher">
+      </div>
+    </div>
+  </section>
 
-<div class="grid">
+  <section class="card">
+    <h2>4. Adicionales</h2>
+    <label class="check">
+      <input id="soda" type="checkbox"> 
+      Agregar 1 gaseosa (se entrega durante el viaje)
+    </label>
+    <p class="muted" style="margin-top:6px">El precio de la gaseosa se coordinará con el conductor en ruta.</p>
+  </section>
 
-<div><label for="date">Fecha de salida</label><input id="date" type="date"></div>
+  <section class="card">
+    <h2>5. Resumen de la reserva</h2>
+    <div class="summary-box" id="summary">Selecciona fecha, vehículo y asiento para ver el detalle.</div>
+    
+    <div class="notice">
+      Tarifa base: <b>S/ 60.00</b> (Adelanto requerido: S/ 12.00). Si reservas dentro de las últimas 6 horas, aplica recargo del 20% (S/ 72.00).
+    </div>
 
-<div><label for="time">Hora de salida</label>
+    <div class="btn-group">
+      <button id="reserveWeb" class="action-btn" disabled>Registrar reserva en el sistema</button>
+      <button id="reserveWp" class="action-btn whatsapp" disabled>Enviar comprobante por WhatsApp</button>
+    </div>
+  </section>
 
-<select id="time">
-
-<option value="19:00">7:00 p. m.</option>
-
-<option value="18:00">6:00 p. m.</option>
-
-<option value="20:00">8:00 p. m.</option>
-
-</select>
-
-</div>
-
-<div class="full">
-
-<label>Elige tu vehículo</label>
-
-<div class="vehicles" id="vehicles">
-
-<div class="vehicle active" data-v="1">Vehículo 1</div>
-
-<div class="vehicle" data-v="2">Vehículo 2</div>
-
-<div class="vehicle" data-v="3">Vehículo 3</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
-
-<h2>2. Elige tu asiento</h2>
-
-<p class="muted">Selecciona un asiento disponible. Esta versión es una demostración en este dispositivo.</p>
-
-<div class="seats" id="seats"></div>
-
-</section>
-
-<section class="card">
-
-<h2>3. Adicionales para tu viaje</h2>
-
-<label for="pack">Selecciona tu pack de bebidas sin alcohol</label>
-
-<select id="pack">
-
-<option value="0">No deseo adicionales</option>
-
-<option value="40">Pack de 6 bebidas  pilsen - S/ 40</option>
-
-<option value="80">Pack de 12 bebidas  pilsen - S/ 80</option>
-
-</select>
-
-<p class="muted">Entrega durante el viaje.</p>
-
-</section>
-
-<section class="card">
-
-<h2>4. Resumen</h2>
-
-<div class="summary" id="summary">Selecciona fecha, vehículo y asiento para ver el resumen.</div>
-
-<div class="notice" style="margin:12px 0">La tarifa base y los datos de contacto para confirmar la reserva todavía deben configurarse.</div>
-
-<button id="reserve" disabled>Solicitar reserva</button>
-
-<p class="muted">La solicitud no se envía a una central ni bloquea asientos en otros teléfonos. Para reservas reales se necesita conectar una base de datos y un sistema de confirmación.</p>
-
-</section>
-
-<footer>TAXI ÁNCASH · Demo inicial</footer>
-
+  <footer>TAXI ÁNCASH · San Marcos ↔ Antamina</footer>
 </main>
 
+<div id="toast"></div>
+
 <script>
+const date = document.querySelector('#date');
+const time = document.querySelector('#time');
+const soda = document.querySelector('#soda');
+const passenger = document.querySelector('#passenger');
+const phone = document.querySelector('#phone');
+const pay = document.querySelector('#pay');
+const operation = document.querySelector('#operation');
+const summary = document.querySelector('#summary');
+const reserveWeb = document.querySelector('#reserveWeb');
+const reserveWp = document.querySelector('#reserveWp');
 
-const date=document.querySelector('#date');
+let vehicleName = 'Toyota Hilux';
+let vehiclePlate = 'H3O-834';
+let seat = null;
 
-const time=document.querySelector('#time');
+// Configurar fechas
+const today = new Date();
+today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+const todayStr = today.toISOString().slice(0, 10);
+date.min = todayStr;
+date.value = todayStr;
 
-const pack=document.querySelector('#pack');
+const maxDate = new Date(today);
+maxDate.setDate(maxDate.getDate() + 30);
+date.max = maxDate.toISOString().slice(0, 10);
 
-const today=new Date();
-
-date.min=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
-
-let vehicle='1',seat=null;
-
-const seats=document.querySelector('#seats');
-
-const summary=document.querySelector('#summary');
-
-const reserve=document.querySelector('#reserve');
-
-function renderSeats(){
-
-seats.innerHTML='';
-
-for(let i=1;i<=4;i++){
-
-const b=document.createElement('button');
-
-b.type='button';
-
-b.className='seat'+(seat===i?' selected':'');
-
-b.textContent='Asiento '+i;
-
-b.onclick=()=>{seat=i;renderSeats();update()};
-
-seats.append(b);
-
+function notify(msg) {
+  const t = document.querySelector('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+function renderSeats() {
+  document.querySelectorAll('.cabin-grid .seat:not(.driver)').forEach(btn => {
+    const sNum = Number(btn.dataset.seat);
+    btn.className = 'seat' + (seat === sNum ? ' selected' : '');
+    btn.onclick = () => {
+      seat = sNum;
+      renderSeats();
+      updateSummary();
+    };
+  });
 }
 
-function update(){
+function updateSummary() {
+  const dVal = date.value ? new Date(date.value + 'T12:00:00').toLocaleDateString('es-PE', {dateStyle:'full'}) : 'Sin fecha';
+  const depTime = time.value;
+  
+  // Cálculo de tarifa y última hora
+  let isLate = false;
+  let surchargeText = 'Sin recargo de última hora.';
+  if (date.value) {
+    const [h, m] = depTime.split(':');
+    const departure = new Date(date.value + 'T' + h + ':' + m + ':00');
+    const hours = (departure - new Date()) / 36e5;
+    if (hours >= 0 && hours <= 6) {
+      isLate = true;
+      surchargeText = 'Corresponde recargo de última hora del 20% (Tarifa: S/ 72.00).';
+    } else if (hours < 0) {
+      surchargeText = 'La hora seleccionada ya pasó.';
+    }
+  }
 
-const d=date.value?new Date(date.value+'T12:00:00').toLocaleDateString('es-PE'):'Sin fecha';
+  const price = isLate ? 72 : 60;
+  const deposit = price * 0.2;
+  const balance = price - deposit;
 
-const dep=time.value;
+  summary.innerHTML = `
+    <b>Fecha y Hora:</b> ${dVal} a las ${depTime === '19:00' ? '7:00 p. m.' : depTime === '18:00' ? '6:00 p. m.' : '8:00 p. m.'}<br>
+    <b>Unidad:</b> ${vehicleName} (${vehiclePlate})<br>
+    <b>Asiento elegido:</b> ${seat ? 'Asiento #' + seat : 'Ninguno'}<br>
+    <b>Pasajero:</b> ${passenger.value.trim() || 'No ingresado'}<br>
+    <b>Celular:</b> ${phone.value.trim() || 'No ingresado'}<br>
+    <b>Adicional:</b> ${soda.checked ? 'Sí (1 Gaseosa)' : 'No'}<br>
+    <b>Tarifa Total:</b> S/ ${price.toFixed(2)} ${isLate ? '<span style="color:#d97706;font-weight:700">(Incluye +20%)</span>' : ''}<br>
+    <b>Adelanto (20%):</b> S/ ${deposit.toFixed(2)} | <b>Saldo al abordar:</b> S/ ${balance.toFixed(2)}<br>
+    <b>Estado de tiempo:</b> ${surchargeText}
+  `;
 
-const packPrice=Number(pack.value);
-
-const packName=packPrice===40?'Pack de 6 bebidas sin alcohol':packPrice===80?'Pack de 12 bebidas sin alcohol':'Ninguno';
-
-let surcharge='No calculado: falta configurar la tarifa y validar la hora actual.';
-
-if(date.value){
-
-const departure=new Date(date.value+'T'+dep+':00');
-
-const hours=(departure-new Date())/36e5;
-
-if(hours>=0&&hours<=6)surcharge='Corresponde recargo de última hora del 20 % sobre la tarifa base.';
-
-else if(hours>6)surcharge='Sin recargo de última hora.';
-
-else surcharge='La hora seleccionada ya pasó.';
-
+  const isValid = date.value && seat && passenger.value.trim().length > 2 && /^[0-9]{9}$/.test(phone.value.trim()) && operation.value.trim();
+  reserveWeb.disabled = !isValid;
+  reserveWp.disabled = !isValid;
 }
 
-summary.innerHTML='<b>Fecha:</b> '+d+
-
-'<br><b>Hora:</b> '+dep+
-
-'<br><b>Vehículo:</b> '+vehicle+
-
-'<br><b>Asiento:</b> '+(seat||'Sin elegir')+
-
-'<br><b>Adicional:</b> '+packName+
-
-'<br><b>Precio del adicional:</b> S/ '+packPrice+
-
-'<br><b>Entrega:</b> Durante el viaje'+
-
-'<br><b>Tarifa base:</b> Pendiente de configurar'+
-
-'<br><b>Última hora:</b> '+surcharge+
-
-'<br><b>Total del viaje:</b> Pendiente de configurar tarifa base';
-
-reserve.disabled=!(date.value&&seat);
-
-}
-
-document.querySelectorAll('.vehicle').forEach(el=>el.onclick=()=>{
-
-document.querySelectorAll('.vehicle').forEach(x=>x.classList.remove('active'));
-
-el.classList.add('active');
-
-vehicle=el.dataset.v;
-
-seat=null;
-
-renderSeats();
-
-update();
-
+// Selección de vehículos
+document.querySelectorAll('.vehicle').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('.vehicle').forEach(x => x.classList.remove('active'));
+    el.classList.add('active');
+    vehicleName = el.dataset.v === 'Hilux' ? 'Toyota Hilux' : el.dataset.v === 'Foton' ? 'Foton Tunland' : 'VW Amarok V6';
+    vehiclePlate = el.dataset.plate;
+    seat = null;
+    renderSeats();
+    updateSummary();
+  };
 });
 
-[date,time,pack].forEach(el=>el.addEventListener('change',update));
+// Generar texto para WhatsApp
+function getWhatsAppUrl() {
+  const cleanPhone = '943000111'; // Número central configurable
+  const msg = [
+    `*NUEVA RESERVA - TAXI ÁNCASH*`,
+    `Ruta: San Marcos ↔ Antamina`,
+    `--------------------------`,
+    `*Pasajero:* ${passenger.value.trim()}`,
+    `*Celular:* ${phone.value.trim()}`,
+    `*Fecha:* ${date.value} (${time.value})`,
+    `*Vehículo:* ${vehicleName} (${vehiclePlate})`,
+    `*Asiento:* #${seat}`,
+    `*Adicional Gaseosa:* ${soda.checked ? 'Sí' : 'No'}`,
+    `--------------------------`,
+    `*Método de pago:* ${pay.value}`,
+    `*N.° Operación:* ${operation.value.trim()}`,
+    `_Adjunto mi comprobante de adelanto para validación._`
+  ].join('\n');
 
-reserve.onclick=()=>alert('Esta es una demo visual. Para recibir reservas reales debemos conectar el sistema de reservas y configurar tarifas y contacto.');
+  return `https://wa.me/51${cleanPhone}?text=${encodeURIComponent(msg)}`;
+}
+
+reserveWeb.onclick = () => {
+  notify('¡Reserva registrada con éxito! Administración validará tu adelanto.');
+  operation.value = '';
+};
+
+reserveWp.onclick = () => {
+  notify('Abriendo WhatsApp con los datos de tu reserva...');
+  window.open(getWhatsAppUrl(), '_blank');
+};
+
+[date, time, soda, passenger, phone, pay, operation].forEach(el => el.addEventListener('input', updateSummary));
+[date, time, soda, pay].forEach(el => el.addEventListener('change', updateSummary));
 
 renderSeats();
-
-update();
-
+updateSummary();
 </script>
-
 </body>
-
 </html>
